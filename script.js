@@ -132,8 +132,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let particles = [];
         let isOrdered = false;
 
-        // Colors for particles (School themes: Yellow = Students, Green = Money, Blue = Teachers)
-        const colors = ['#facc15', '#4ade80', '#6366f1'];
+        // Data Types with emojis and colors
+        const types = [
+            { id: 'crm', label: 'CRM / O\'quvchilar', icon: ['👤', '🎓', '📝'], color: '#6366f1' },
+            { id: 'finance', label: 'Moliya / Kassa', icon: ['💰', '💵', '💳'], color: '#10b981' },
+            { id: 'stats', label: 'Statistika', icon: ['📊', '📈', '📉'], color: '#f59e0b' }
+        ];
 
         function resize() {
             width = chaosCanvas.width = chaosCanvas.offsetWidth;
@@ -142,66 +146,86 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         class SimParticle {
-            constructor(id) {
-                this.id = id;
-                this.radius = Math.random() * 3 + 2;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
+            constructor() {
+                // Assign Type
+                this.type = types[Math.floor(Math.random() * types.length)];
+                this.icon = this.type.icon[Math.floor(Math.random() * this.type.icon.length)];
 
-                // Chaos Position (Random)
+                // Chaos Position
                 this.cx = Math.random() * width;
                 this.cy = Math.random() * height;
-                this.cvx = (Math.random() - 0.5) * 2;
-                this.cvy = (Math.random() - 0.5) * 2;
+                this.cvx = (Math.random() - 0.5) * 1.5;
+                this.cvy = (Math.random() - 0.5) * 1.5;
 
-                // Order Position (Grid)
-                const cols = 20;
-                const spacingX = width / cols;
-                const spacingY = spacingX;
-                const row = Math.floor(id / cols);
-                const col = id % cols;
-
-                this.ox = (col * spacingX) + (spacingX / 2);
-                this.oy = (row * spacingY) + (spacingY / 2) + 50; // Offset from top
+                // Order Position (set dynamically)
+                this.ox = 0;
+                this.oy = 0;
 
                 // Current State
                 this.x = this.cx;
                 this.y = this.cy;
+                this.size = 20;
             }
 
             update() {
                 if (!isOrdered) {
-                    // Chaos Mode: Move randomly
+                    // Chaos Mode
                     this.x += this.cvx;
                     this.y += this.cvy;
-
-                    // Bounce off walls
                     if (this.x < 0 || this.x > width) this.cvx *= -1;
                     if (this.y < 0 || this.y > height) this.cvy *= -1;
                 } else {
-                    // Order Mode: Move to target (Lerp)
+                    // Order Mode
+                    let zoneX;
+                    if (this.type.id === 'crm') zoneX = width * 0.2;
+                    else if (this.type.id === 'finance') zoneX = width * 0.5;
+                    else zoneX = width * 0.8;
+
+                    if (this.ox === 0) {
+                        this.ox = zoneX + (Math.random() - 0.5) * 120;
+                        this.oy = (height / 2) + (Math.random() - 0.5) * 220;
+                    }
+
                     this.x += (this.ox - this.x) * 0.08;
                     this.y += (this.oy - this.y) * 0.08;
                 }
             }
 
             draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                ctx.fill();
+                ctx.font = `${this.size}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.icon, this.x, this.y);
             }
         }
 
         function initParticles() {
             particles = [];
-            const count = 300; // Number of particles
+            const count = 90;
             for (let i = 0; i < count; i++) {
-                particles.push(new SimParticle(i));
+                particles.push(new SimParticle());
             }
+        }
+
+        function drawLabels() {
+            if (!isOrdered) return;
+
+            ctx.font = 'bold 18px Outfit, sans-serif';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+
+            ctx.fillText("CRM / O'quvchilar", width * 0.2, 70);
+            ctx.fillText("Moliya / Kassa", width * 0.5, 70);
+            ctx.fillText("Analitika", width * 0.8, 70);
+
+            ctx.fillStyle = '#6366f1'; ctx.fillRect(width * 0.2 - 60, 78, 120, 3);
+            ctx.fillStyle = '#10b981'; ctx.fillRect(width * 0.5 - 60, 78, 120, 3);
+            ctx.fillStyle = '#f59e0b'; ctx.fillRect(width * 0.8 - 60, 78, 120, 3);
         }
 
         function animate() {
             ctx.clearRect(0, 0, width, height);
+            drawLabels();
             particles.forEach(p => {
                 p.update();
                 p.draw();
@@ -209,10 +233,11 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animate);
         }
 
-        // Button Click
         sysBtn.addEventListener('click', () => {
             isOrdered = !isOrdered;
+
             if (isOrdered) {
+                particles.forEach(p => { p.ox = 0; });
                 sysBtn.innerHTML = '<i class="fas fa-random"></i> Qaytarish';
                 sysBtn.classList.remove('btn-primary', 'pulse-btn');
                 sysBtn.classList.add('btn-outline');
@@ -220,12 +245,149 @@ document.addEventListener('DOMContentLoaded', () => {
                 sysBtn.innerHTML = '<i class="fas fa-magic"></i> Tizimlashtirish';
                 sysBtn.classList.add('btn-primary', 'pulse-btn');
                 sysBtn.classList.remove('btn-outline');
+                particles.forEach(p => {
+                    p.cvx = (Math.random() - 0.5) * 4;
+                    p.cvy = (Math.random() - 0.5) * 4;
+                });
             }
         });
 
-        // Init
         window.addEventListener('resize', resize);
-        resize(); // First init
+        resize();
         animate();
     }
+
+    // --- TELEGRAM INTEGRATION ---
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoading = submitBtn.querySelector('.btn-loading');
+    const formMessage = document.getElementById('formMessage');
+
+    const BOT_TOKEN = '8084101687:AAG2pCUT_xDGxU5O82Jy5mEJb1fMjDcbKMA';
+    const CHAT_ID = '6045648028';
+
+    contactForm.addEventListener('submit', e => {
+        e.preventDefault();
+
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoading.style.display = 'inline-block';
+        formMessage.textContent = '';
+        formMessage.className = 'form-message';
+
+        const name = document.getElementById('name').value;
+        const school = document.getElementById('school').value;
+        const phone = document.getElementById('phone').value;
+
+        const message = `<b>Yangi Lid 🎓</b>\n\n` +
+            `👤 <b>Ism:</b> ${name}\n` +
+            `🏫 <b>Maktab:</b> ${school}\n` +
+            `📞 <b>Telefon:</b> ${phone}\n\n` +
+            `<i>Durbin saytidan yuborildi</i>`;
+
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+
+        fetch(url, {
+            method: 'GET',
+            mode: 'no-cors'
+        })
+            .then(() => {
+                formMessage.textContent = "Ma'lumotlar muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.";
+                formMessage.classList.add('success');
+                contactForm.reset();
+            })
+            .catch(error => {
+                console.error('Error!', error);
+                formMessage.textContent = "Internet xatosi. Iltimos, qayta urinib ko'ring.";
+                formMessage.classList.add('error');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                btnText.style.display = 'inline-block';
+                btnLoading.style.display = 'none';
+            });
+    });
+
+    // --- Network Animation ---
+    const canvas = document.createElement('canvas');
+    canvas.id = 'network-canvas';
+    document.body.prepend(canvas);
+    const netCtx = canvas.getContext('2d');
+
+    let netWidth, netHeight;
+    let netParticles = [];
+
+    const mouse = { x: null, y: null, radius: 150 };
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+
+    function resizeNetwork() {
+        netWidth = canvas.width = window.innerWidth;
+        netHeight = canvas.height = window.innerHeight;
+        initNetwork();
+    }
+    window.addEventListener('resize', resizeNetwork);
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * netWidth;
+            this.y = Math.random() * netHeight;
+            this.vx = (Math.random() - 0.5) * 0.5;
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.size = Math.random() * 2 + 1;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > netWidth) this.vx *= -1;
+            if (this.y < 0 || this.y > netHeight) this.vy *= -1;
+
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < mouse.radius) {
+                const opacity = 1 - (distance / mouse.radius);
+                netCtx.beginPath();
+                netCtx.strokeStyle = `rgba(129, 140, 248, ${opacity})`;
+                netCtx.lineWidth = 1.5;
+                netCtx.moveTo(this.x, this.y);
+                netCtx.lineTo(mouse.x, mouse.y);
+                netCtx.stroke();
+            }
+        }
+
+        draw() {
+            netCtx.beginPath();
+            netCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            netCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            netCtx.fill();
+        }
+    }
+
+    function initNetwork() {
+        netParticles = [];
+        const numberOfParticles = (netWidth * netHeight) / 15000;
+        for (let i = 0; i < numberOfParticles; i++) {
+            netParticles.push(new Particle());
+        }
+    }
+
+    function animateNetwork() {
+        netCtx.clearRect(0, 0, netWidth, netHeight);
+        netParticles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateNetwork);
+    }
+
+    resizeNetwork();
+    animateNetwork();
 });
