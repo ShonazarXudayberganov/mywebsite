@@ -25,6 +25,45 @@
     /* Indigo 300 */
     --font-main: 'Outfit', sans-serif;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* Gradient Variables */
+    --gradient-start: #ffffff;
+    --gradient-end: #a5b4fc;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Theme Toggle Button Position */
+.theme-toggle {
+    margin-right: 0;
+    margin-left: 15px;
+    /* Spacing from demo button */
+    transition: var(--transition);
+    font-size: 1.2rem;
+}
+
+.theme-toggle:hover {
+    background: var(--primary);
+    color: white;
+    transform: rotate(15deg);
+}
+
+/* Invert Logo for Light Mode if needed - expecting logo to be capable or filter it */
+[data-theme="light"] .logo-img {
+    filter: invert(1);
+    /* Invert white logo to black */
+}
+
+/* Adjust particles for light mode */
+[data-theme="light"] #network-canvas {
+    opacity: 0.8;
 }
 
 * {
@@ -36,11 +75,17 @@
 body {
     font-family: var(--font-main);
     background-color: var(--bg);
-    background-image: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
-        radial-gradient(circle at 85% 30%, rgba(20, 184, 166, 0.08) 0%, transparent 25%);
+    /* Dynamic background shapes logic handled by .bg-shape */
     color: var(--text);
     overflow-x: hidden;
     line-height: 1.6;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Light mode background gradient adjustment */
+[data-theme="light"] body {
+    background-image: radial-gradient(circle at 10% 10%, rgba(99, 102, 241, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(20, 184, 166, 0.03) 0%, transparent 40%);
 }
 
 a {
@@ -1490,4 +1535,67 @@ footer {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0);
     }
+}
+
+/* --- Zero Gravity (Subtle Levitation) --- */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+        /* Very subtle movement */
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Apply floating to key elements */
+.feature-card,
+.step-item,
+.dashboard-mockup,
+.role-visual,
+.icon-box,
+.stat-card {
+    animation: float 10s ease-in-out infinite;
+    /* Slower default */
+    will-change: transform;
+}
+
+/* Vary animation timings for organic feel */
+.feature-card:nth-child(even),
+.step-item:nth-child(even) {
+    animation-duration: 12s;
+    /* Very slow */
+    animation-delay: 2s;
+}
+
+.feature-card:nth-child(odd),
+.step-item:nth-child(odd) {
+    animation-duration: 9s;
+    animation-delay: 0s;
+}
+
+.role-visual {
+    animation-duration: 14s;
+}
+
+.icon-box {
+    animation-duration: 8s;
+    /* Icons can be slightly faster */
+}
+
+.dashboard-mockup {
+    animation-duration: 15s;
+    /* Big elements move very slowly */
+}
+
+/* Pause on hover */
+.feature-card:hover,
+.step-item:hover,
+.role-visual:hover {
+    animation-play-state: paused;
 }
