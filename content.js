@@ -1,5 +1,8 @@
+
+
+
 const translations = {
-    uz: {
+    uz: { 
         nav: {
             home: "Bosh sahifa",
             product: "Mahsulot",

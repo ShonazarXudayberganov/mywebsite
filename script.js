@@ -86,10 +86,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(255, 255, 255, 0.9)';
+            navbar.style.background = 'rgba(5, 5, 5, 0.95)'; // Darker on scroll
             navbar.style.padding = '5px 30px';
         } else {
-            navbar.style.background = 'rgba(255, 255, 255, 0.5)';
+            navbar.style.background = 'rgba(5, 5, 5, 0.75)'; // Default transparency
             navbar.style.padding = '10px 30px';
         }
     });
@@ -181,4 +181,90 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     });
 
+    // --- Digital Network Animation (Canvas) ---
+    const canvas = document.createElement('canvas');
+    canvas.id = 'network-canvas';
+    document.body.prepend(canvas);
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let particles = [];
+
+    // Mouse state
+    const mouse = { x: null, y: null, radius: 150 };
+
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+
+    // Resize
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+        initParticles();
+    }
+    window.addEventListener('resize', resize);
+
+    // Particle Class
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
+            this.vy = (Math.random() - 0.5) * 0.5;
+            this.size = Math.random() * 2 + 1;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Bounce off edges
+            if (this.x < 0 || this.x > width) this.vx *= -1;
+            if (this.y < 0 || this.y > height) this.vy *= -1;
+
+            // Mouse Interaction
+            let dx = mouse.x - this.x;
+            let dy = mouse.y - this.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < mouse.radius) {
+                const opacity = 1 - (distance / mouse.radius);
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(129, 140, 248, ${opacity})`; // Brighter Indigo (Tailwind Indigo-400)
+                ctx.lineWidth = 1.5; // Thicker lines
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(mouse.x, mouse.y);
+                ctx.stroke();
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; // Much brighter dots
+            ctx.fill();
+        }
+    }
+
+    function initParticles() {
+        particles = [];
+        const numberOfParticles = (width * height) / 15000; // Density
+        for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function animateNetwork() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateNetwork);
+    }
+
+    resize();
+    animateNetwork();
 });
