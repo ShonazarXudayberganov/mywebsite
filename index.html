@@ -467,37 +467,22 @@
         </div>
     </section>
 
-    <!-- ROI Calculator Section -->
-    <section class="section roi-section">
-        <div class="container">
-            <div class="glass p-5">
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <h2 class="section-title text-left">Qancha tejashingizni hisoblang</h2>
-                        <p class="lead-text">Durbin tizimi orqali yo'qotilayotgan mablag'lar va vaqtni tejang.</p>
+    <!-- Chaos to Order Simulator -->
+    <section class="section chaos-section">
+        <div class="container text-center">
+            <div class="section-header">
+                <h2 class="section-title">Tartibsizlikdan... Tizimga</h2>
+                <div class="title-line"></div>
+                <p class="section-subtitle">Durbin biznesingizni qanday o'zgartirishini ko'ring</p>
+            </div>
 
-                        <div class="calculator-form">
-                            <div class="form-group">
-                                <label>O'quvchilar soni: <span id="studentCountVal">200</span></label>
-                                <input type="range" class="custom-range" id="studentRange" min="50" max="2000" step="10"
-                                    value="200">
-                            </div>
-                            <div class="form-group">
-                                <label>O'rtacha o'quv narxi (so'm): <span id="feeVal">500,000</span></label>
-                                <input type="range" class="custom-range" id="feeRange" min="100000" max="5000000"
-                                    step="50000" value="500000">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="roi-result-card">
-                            <h3>Yillik iqtisod (taxminiy)</h3>
-                            <div class="roi-value" id="totalSavings">120,000,000 so'm</div>
-                            <p class="roi-note">* O'rtacha 10% samaradorlik oshishi va yo'qotishlar kamayishi hisobiga
-                            </p>
-                            <a href="#contact" class="btn btn-primary mt-3">Tizimni sinab ko'rish</a>
-                        </div>
-                    </div>
+            <div class="simulator-container">
+                <canvas id="chaosCanvas"></canvas>
+                <div class="simulator-overlay">
+                    <button id="systematizeBtn" class="btn btn-primary pulse-btn">
+                        <i class="fas fa-magic"></i> Tizimlashtirish
+                    </button>
+                    <p class="simulator-hint">Tugmani bosing va o'zgarishni ko'ring!</p>
                 </div>
             </div>
         </div>
