@@ -122,149 +122,110 @@ document.addEventListener('DOMContentLoaded', () => {
     // Trigger counters once when hero is in view (simplified)
     setTimeout(runCounters, 1000);
 
-    // --- TELEGRAM INTEGRATION (Custom Logic) ---
-    const contactForm = document.getElementById('contactForm');
-    const submitBtn = document.getElementById('submitBtn');
-    const btnText = submitBtn.querySelector('.btn-text');
-    const btnLoading = submitBtn.querySelector('.btn-loading');
-    const formMessage = document.getElementById('formMessage');
+    // --- Chaos to Order Simulator ---
+    const chaosCanvas = document.getElementById('chaosCanvas');
+    const sysBtn = document.getElementById('systematizeBtn');
 
-    // User Credentials
-    const BOT_TOKEN = '8084101687:AAG2pCUT_xDGxU5O82Jy5mEJb1fMjDcbKMA';
-    const CHAT_ID = '6045648028';
+    if (chaosCanvas && sysBtn) {
+        const ctx = chaosCanvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let isOrdered = false;
 
-    contactForm.addEventListener('submit', e => {
-        e.preventDefault();
+        // Colors for particles (School themes: Yellow = Students, Green = Money, Blue = Teachers)
+        const colors = ['#facc15', '#4ade80', '#6366f1'];
 
-        // UI: Show loading state
-        submitBtn.disabled = true;
-        btnText.style.display = 'none';
-        btnLoading.style.display = 'inline-block';
-        formMessage.textContent = '';
-        formMessage.className = 'form-message';
-
-        // Get Values
-        const name = document.getElementById('name').value;
-        const school = document.getElementById('school').value;
-        const phone = document.getElementById('phone').value;
-
-        // Construct Message
-        const message = `<b>Yangi Lid 🎓</b>\n\n` +
-            `👤 <b>Ism:</b> ${name}\n` +
-            `🏫 <b>Maktab:</b> ${school}\n` +
-            `📞 <b>Telefon:</b> ${phone}\n\n` +
-            `<i>Durbin saytidan yuborildi</i>`;
-
-        // Send to Telegram (Method: GET with no-cors to bypass browser restrictions)
-        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
-
-        fetch(url, {
-            method: 'GET',
-            mode: 'no-cors' // Crucial: Allows sending without waiting for a readable response
-        })
-            .then(() => {
-                // Optimistic Success: Since we can't read the response in no-cors, we assume success if no network error occurred.
-                formMessage.textContent = "Ma'lumotlar muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.";
-                formMessage.classList.add('success');
-                contactForm.reset();
-            })
-            .catch(error => {
-                console.error('Error!', error);
-                formMessage.textContent = "Internet xatosi. Iltimos, qayta urinib ko'ring.";
-                formMessage.classList.add('error');
-            })
-            .finally(() => {
-                // UI: Reset loading state
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline-block';
-                btnLoading.style.display = 'none';
-            });
-    });
-
-    // --- Digital Network Animation (Canvas) ---
-    const canvas = document.createElement('canvas');
-    canvas.id = 'network-canvas';
-    document.body.prepend(canvas);
-    const ctx = canvas.getContext('2d');
-
-    let width, height;
-    let particles = [];
-
-    // Mouse state
-    const mouse = { x: null, y: null, radius: 150 };
-
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
-    });
-
-    // Resize
-    function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        initParticles();
-    }
-    window.addEventListener('resize', resize);
-
-    // Particle Class
-    class Particle {
-        constructor() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.5; // Slow movement
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.size = Math.random() * 2 + 1;
+        function resize() {
+            width = chaosCanvas.width = chaosCanvas.offsetWidth;
+            height = chaosCanvas.height = chaosCanvas.offsetHeight;
+            initParticles();
         }
 
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
+        class SimParticle {
+            constructor(id) {
+                this.id = id;
+                this.radius = Math.random() * 3 + 2;
+                this.color = colors[Math.floor(Math.random() * colors.length)];
 
-            // Bounce off edges
-            if (this.x < 0 || this.x > width) this.vx *= -1;
-            if (this.y < 0 || this.y > height) this.vy *= -1;
+                // Chaos Position (Random)
+                this.cx = Math.random() * width;
+                this.cy = Math.random() * height;
+                this.cvx = (Math.random() - 0.5) * 2;
+                this.cvy = (Math.random() - 0.5) * 2;
 
-            // Mouse Interaction
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
+                // Order Position (Grid)
+                const cols = 20;
+                const spacingX = width / cols;
+                const spacingY = spacingX;
+                const row = Math.floor(id / cols);
+                const col = id % cols;
 
-            if (distance < mouse.radius) {
-                const opacity = 1 - (distance / mouse.radius);
+                this.ox = (col * spacingX) + (spacingX / 2);
+                this.oy = (row * spacingY) + (spacingY / 2) + 50; // Offset from top
+
+                // Current State
+                this.x = this.cx;
+                this.y = this.cy;
+            }
+
+            update() {
+                if (!isOrdered) {
+                    // Chaos Mode: Move randomly
+                    this.x += this.cvx;
+                    this.y += this.cvy;
+
+                    // Bounce off walls
+                    if (this.x < 0 || this.x > width) this.cvx *= -1;
+                    if (this.y < 0 || this.y > height) this.cvy *= -1;
+                } else {
+                    // Order Mode: Move to target (Lerp)
+                    this.x += (this.ox - this.x) * 0.08;
+                    this.y += (this.oy - this.y) * 0.08;
+                }
+            }
+
+            draw() {
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(129, 140, 248, ${opacity})`; // Brighter Indigo (Tailwind Indigo-400)
-                ctx.lineWidth = 1.5; // Thicker lines
-                ctx.moveTo(this.x, this.y);
-                ctx.lineTo(mouse.x, mouse.y);
-                ctx.stroke();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
             }
         }
 
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; // Much brighter dots
-            ctx.fill();
+        function initParticles() {
+            particles = [];
+            const count = 300; // Number of particles
+            for (let i = 0; i < count; i++) {
+                particles.push(new SimParticle(i));
+            }
         }
-    }
 
-    function initParticles() {
-        particles = [];
-        const numberOfParticles = (width * height) / 15000; // Density
-        for (let i = 0; i < numberOfParticles; i++) {
-            particles.push(new Particle());
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
         }
-    }
 
-    function animateNetwork() {
-        ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
+        // Button Click
+        sysBtn.addEventListener('click', () => {
+            isOrdered = !isOrdered;
+            if (isOrdered) {
+                sysBtn.innerHTML = '<i class="fas fa-random"></i> Qaytarish';
+                sysBtn.classList.remove('btn-primary', 'pulse-btn');
+                sysBtn.classList.add('btn-outline');
+            } else {
+                sysBtn.innerHTML = '<i class="fas fa-magic"></i> Tizimlashtirish';
+                sysBtn.classList.add('btn-primary', 'pulse-btn');
+                sysBtn.classList.remove('btn-outline');
+            }
         });
-        requestAnimationFrame(animateNetwork);
-    }
 
-    resize();
-    animateNetwork();
+        // Init
+        window.addEventListener('resize', resize);
+        resize(); // First init
+        animate();
+    }
 });
