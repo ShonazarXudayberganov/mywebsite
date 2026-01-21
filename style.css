@@ -1199,9 +1199,10 @@ footer {
 /* --- Role Dashboard Visuals --- */
 .role-visual {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     padding: 20px;
+    padding-right: 80px;
 }
 
 .dashboard-mockup {
