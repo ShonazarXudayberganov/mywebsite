@@ -134,9 +134,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Data Types with emojis and colors
         const types = [
-            { id: 'crm', label: 'CRM / O\'quvchilar', icon: ['👤', '🎓', '📝'], color: '#6366f1' },
-            { id: 'finance', label: 'Moliya / Kassa', icon: ['💰', '💵', '💳'], color: '#10b981' },
-            { id: 'stats', label: 'Statistika', icon: ['📊', '📈', '📉'], color: '#f59e0b' }
+            { id: 'crm', label: 'CRM / O\'quvchilar', icon: '👤', color: '#6366f1', count: 0 },
+            { id: 'finance', label: 'Moliya / Kassa', icon: '💰', color: '#10b981', count: 0 },
+            { id: 'stats', label: 'Statistika', icon: '📊', color: '#f59e0b', count: 0 }
         ];
 
         function resize() {
@@ -149,7 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
             constructor() {
                 // Assign Type
                 this.type = types[Math.floor(Math.random() * types.length)];
-                this.icon = this.type.icon[Math.floor(Math.random() * this.type.icon.length)];
+                this.icon = this.type.icon;
+                this.gridIndex = this.type.count++;
 
                 // Chaos Position
                 this.cx = Math.random() * width;
@@ -175,15 +176,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (this.x < 0 || this.x > width) this.cvx *= -1;
                     if (this.y < 0 || this.y > height) this.cvy *= -1;
                 } else {
-                    // Order Mode
+                    // Order Mode: 2 columns, rows going down
                     let zoneX;
                     if (this.type.id === 'crm') zoneX = width * 0.2;
                     else if (this.type.id === 'finance') zoneX = width * 0.5;
                     else zoneX = width * 0.8;
 
                     if (this.ox === 0) {
-                        this.ox = zoneX + (Math.random() - 0.5) * 120;
-                        this.oy = (height / 2) + (Math.random() - 0.5) * 220;
+                        const cols = 2;
+                        const spacing = 35;
+                        const col = this.gridIndex % cols;
+                        const row = Math.floor(this.gridIndex / cols);
+
+                        this.ox = zoneX + (col - 0.5) * spacing;
+                        this.oy = 120 + (row * spacing);
                     }
 
                     this.x += (this.ox - this.x) * 0.08;
@@ -200,6 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function initParticles() {
+            // Reset counters
+            types.forEach(t => t.count = 0);
+
             particles = [];
             const count = 90;
             for (let i = 0; i < count; i++) {
@@ -390,4 +399,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resizeNetwork();
     animateNetwork();
+
+    // --- Live Toast Notifications ---
+    const toastContainer = document.getElementById('toastContainer');
+
+    const notifications = [
+        { icon: '👤', title: "Yangi o'quvchi", message: "Alisher Karimov ro'yxatdan o'tdi" },
+        { icon: '💰', title: "To'lov qabul qilindi", message: "Click orqali 500,000 so'm to'landi" },
+        { icon: '📊', title: "Baholar kiritildi", message: "Matematika fan bo'yicha 15 baho" },
+        { icon: '📝', title: "Davomat belgilandi", message: "7-A sinf uchun davomat yakunlandi" },
+        { icon: '👨‍🏫', title: "O'qituvchi kiritdi", message: "Fizika darsini boshladi" },
+        { icon: '📱', title: "Ota-ona ko'rdi", message: "Sardor Azizov baholarni tekshirdi" },
+        { icon: '💳', title: "Plastik to'lov", message: "Payme orqali 750,000 so'm" },
+        { icon: '📈', title: "Statistika yangilandi", message: "Oylik hisobot tayyor" },
+        { icon: '🎓', title: "Guruh to'ldi", message: "Ingliz tili guruhiga 12-o'quvchi" },
+        { icon: '🔔', title: "Eslatma yuborildi", message: "Ota-onalarga SMS jo'natildi" }
+    ];
+
+    function showToast() {
+        const notification = notifications[Math.floor(Math.random() * notifications.length)];
+
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `
+            <div class="toast-icon">${notification.icon}</div>
+            <div class="toast-content">
+                <div class="toast-title">${notification.title}</div>
+                <div class="toast-message">${notification.message}</div>
+            </div>
+        `;
+
+        toastContainer.appendChild(toast);
+
+        // Remove after 4 seconds
+        setTimeout(() => {
+            toast.classList.add('removing');
+            setTimeout(() => toast.remove(), 300);
+        }, 4000);
+    }
+
+    // Show first notification after 3 seconds, then random intervals
+    setTimeout(() => {
+        showToast();
+        setInterval(() => {
+            // Random interval between 5-8 seconds
+            setTimeout(showToast, Math.random() * 3000 + 5000);
+        }, 8000);
+    }, 3000);
 });
