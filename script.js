@@ -23,6 +23,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 else element.textContent = translation;
             }
         });
+
+        // Update placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder');
+            const translation = getNestedTranslation(translations[lang], key);
+            if (translation) {
+                element.setAttribute('placeholder', translation);
+            }
+        });
     }
 
     // Helper to access nested object properties e.g. 'nav.home'
@@ -40,6 +49,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize Language
     updateLanguage('uz');
+
+    // --- Active Navigation Link on Scroll ---
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    function setActiveLink() {
+        let currentSection = '';
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+
+            if (window.scrollY >= sectionTop - 100) {
+                currentSection = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${currentSection}`) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // Update on scroll
+    window.addEventListener('scroll', setActiveLink);
+
+    // Update on click
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            navLinks.forEach(l => l.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+
+    // Set initial active link
+    setActiveLink();
 
 
     // --- Tabs System for Roles ---
@@ -61,38 +108,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Mobile Menu Toggle ---
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
+    const hamburger = document.querySelector('.hamburger-btn');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinksAll = document.querySelectorAll('.nav-link');
 
-    hamburger.addEventListener('click', () => {
-        // Simple toggle for now, in a real app would perform better class toggling
-        const isFlex = navLinks.style.display === 'flex';
-        navLinks.style.display = isFlex ? 'none' : 'flex';
+    if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
 
-        if (!isFlex) {
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '70px';
-            navLinks.style.right = '20px';
-            navLinks.style.background = 'white';
-            navLinks.style.padding = '20px';
-            navLinks.style.borderRadius = '12px';
-            navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
-        }
-    });
+        // Close menu when clicking a link
+        navLinksAll.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+    }
 
-
-    // --- Navbar Scroll Effect ---
+    // --- Navbar Scroll Shadow Effect ---
     const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(5, 5, 5, 0.95)'; // Darker on scroll
-            navbar.style.padding = '5px 30px';
-        } else {
-            navbar.style.background = 'rgba(5, 5, 5, 0.75)'; // Default transparency
-            navbar.style.padding = '10px 30px';
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+                navbar.style.transition = 'box-shadow 0.3s ease';
+            } else {
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    }
 
 
     // --- Number Counter Animation ---
@@ -269,136 +317,148 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- TELEGRAM INTEGRATION ---
     const contactForm = document.getElementById('contactForm');
     const submitBtn = document.getElementById('submitBtn');
-    const btnText = submitBtn.querySelector('.btn-text');
-    const btnLoading = submitBtn.querySelector('.btn-loading');
-    const formMessage = document.getElementById('formMessage');
 
-    const BOT_TOKEN = '8084101687:AAG2pCUT_xDGxU5O82Jy5mEJb1fMjDcbKMA';
-    const CHAT_ID = '6045648028';
+    if (contactForm && submitBtn) {
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnLoading = submitBtn.querySelector('.btn-loading');
+        const formMessage = document.getElementById('formMessage');
 
-    contactForm.addEventListener('submit', e => {
-        e.preventDefault();
+        const BOT_TOKEN = '8084101687:AAG2pCUT_xDGxU5O82Jy5mEJb1fMjDcbKMA';
+        const CHAT_ID = '6045648028';
 
-        submitBtn.disabled = true;
-        btnText.style.display = 'none';
-        btnLoading.style.display = 'inline-block';
-        formMessage.textContent = '';
-        formMessage.className = 'form-message';
+        contactForm.addEventListener('submit', e => {
+            e.preventDefault();
 
-        const name = document.getElementById('name').value;
-        const school = document.getElementById('school').value;
-        const phone = document.getElementById('phone').value;
-
-        const message = `<b>Yangi Lid 🎓</b>\n\n` +
-            `👤 <b>Ism:</b> ${name}\n` +
-            `🏫 <b>Maktab:</b> ${school}\n` +
-            `📞 <b>Telefon:</b> ${phone}\n\n` +
-            `<i>Durbin saytidan yuborildi</i>`;
-
-        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
-
-        fetch(url, {
-            method: 'GET',
-            mode: 'no-cors'
-        })
-            .then(() => {
-                formMessage.textContent = "Ma'lumotlar muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.";
-                formMessage.classList.add('success');
-                contactForm.reset();
-            })
-            .catch(error => {
-                console.error('Error!', error);
-                formMessage.textContent = "Internet xatosi. Iltimos, qayta urinib ko'ring.";
-                formMessage.classList.add('error');
-            })
-            .finally(() => {
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline-block';
-                btnLoading.style.display = 'none';
-            });
-    });
-
-    // --- Network Animation ---
-    const canvas = document.createElement('canvas');
-    canvas.id = 'network-canvas';
-    document.body.prepend(canvas);
-    const netCtx = canvas.getContext('2d');
-
-    let netWidth, netHeight;
-    let netParticles = [];
-
-    const mouse = { x: null, y: null, radius: 150 };
-
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.x;
-        mouse.y = e.y;
-    });
-
-    function resizeNetwork() {
-        netWidth = canvas.width = window.innerWidth;
-        netHeight = canvas.height = window.innerHeight;
-        initNetwork();
-    }
-    window.addEventListener('resize', resizeNetwork);
-
-    class Particle {
-        constructor() {
-            this.x = Math.random() * netWidth;
-            this.y = Math.random() * netHeight;
-            this.vx = (Math.random() - 0.5) * 0.5;
-            this.vy = (Math.random() - 0.5) * 0.5;
-            this.size = Math.random() * 2 + 1;
-        }
-
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || this.x > netWidth) this.vx *= -1;
-            if (this.y < 0 || this.y > netHeight) this.vy *= -1;
-
-            let dx = mouse.x - this.x;
-            let dy = mouse.y - this.y;
-            let distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < mouse.radius) {
-                const opacity = 1 - (distance / mouse.radius);
-                netCtx.beginPath();
-                netCtx.strokeStyle = `rgba(129, 140, 248, ${opacity})`;
-                netCtx.lineWidth = 1.5;
-                netCtx.moveTo(this.x, this.y);
-                netCtx.lineTo(mouse.x, mouse.y);
-                netCtx.stroke();
+            submitBtn.disabled = true;
+            if (btnText) btnText.style.display = 'none';
+            if (btnLoading) btnLoading.style.display = 'inline-block';
+            if (formMessage) {
+                formMessage.textContent = '';
+                formMessage.className = 'form-message';
             }
-        }
 
-        draw() {
-            netCtx.beginPath();
-            netCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            netCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-            netCtx.fill();
-        }
-    }
+            const name = document.getElementById('name').value;
+            const school = document.getElementById('school').value;
+            const phone = document.getElementById('phone').value;
 
-    function initNetwork() {
-        netParticles = [];
-        const numberOfParticles = (netWidth * netHeight) / 15000;
-        for (let i = 0; i < numberOfParticles; i++) {
-            netParticles.push(new Particle());
-        }
-    }
+            const message = `<b>Yangi Lid 🎓</b>\n\n` +
+                `👤 <b>Ism:</b> ${name}\n` +
+                `🏫 <b>Maktab:</b> ${school}\n` +
+                `📞 <b>Telefon:</b> ${phone}\n\n` +
+                `<i>Durbin saytidan yuborildi</i>`;
 
-    function animateNetwork() {
-        netCtx.clearRect(0, 0, netWidth, netHeight);
-        netParticles.forEach(p => {
-            p.update();
-            p.draw();
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+
+            fetch(url, {
+                method: 'GET',
+                mode: 'no-cors'
+            })
+                .then(() => {
+                    formMessage.textContent = "Ma'lumotlar muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.";
+                    formMessage.classList.add('success');
+                    contactForm.reset();
+                })
+                .catch(error => {
+                    console.error('Error!', error);
+                    formMessage.textContent = "Internet xatosi. Iltimos, qayta urinib ko'ring.";
+                    formMessage.classList.add('error');
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    btnText.style.display = 'inline-block';
+                    btnLoading.style.display = 'none';
+                });
         });
-        requestAnimationFrame(animateNetwork);
     }
 
-    resizeNetwork();
-    animateNetwork();
+    // --- Module Detail Modal ---
+    const modal = document.getElementById('moduleModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    const modalGrid = document.getElementById('modalGrid');
+    const modalFeaturesWrap = document.getElementById('modalFeaturesWrap');
+    const modalFeaturesList = document.getElementById('modalFeaturesList');
+    const modalIcon = modal.querySelector('.modal-icon i');
+    const modalClose = modal.querySelector('.modal-close');
+    const modalOverlay = modal.querySelector('.modal-overlay');
+    const moduleCards = document.querySelectorAll('.module-card');
+
+    function openModal(moduleKey) {
+        const moduleData = translations[currentLang].modals[moduleKey];
+        const moduleCard = document.querySelector(`.module-card[data-module="${moduleKey}"]`);
+        const iconClass = moduleCard.querySelector('i').className;
+
+        if (moduleData) {
+            modalTitle.textContent = moduleData.title;
+            modalSubtitle.innerHTML = moduleData.subtitle || moduleData.desc || '';
+            modalIcon.className = iconClass;
+
+            // Clear previous contents
+            modalGrid.innerHTML = '';
+            modalFeaturesList.innerHTML = '';
+
+            // Handle new "sections" structure (cards inside modal)
+            if (moduleData.sections) {
+                modalFeaturesWrap.style.display = 'none';
+                modalGrid.style.display = 'grid';
+
+                moduleData.sections.forEach(section => {
+                    const card = document.createElement('div');
+                    card.className = 'modal-info-card';
+
+                    let itemsHtml = '';
+                    if (section.items) {
+                        itemsHtml = `<ul>${section.items.map(item => `<li><i class="fas fa-check"></i> ${item}</li>`).join('')}</ul>`;
+                    }
+
+                    card.innerHTML = `
+                        <h4><i class="fas fa-chevron-right"></i> ${section.title}</h4>
+                        ${itemsHtml}
+                    `;
+                    modalGrid.appendChild(card);
+                });
+            } else {
+                // Fallback to old simple list
+                modalGrid.style.display = 'none';
+                modalFeaturesWrap.style.display = 'block';
+
+                if (moduleData.features) {
+                    moduleData.features.forEach(feature => {
+                        const li = document.createElement('li');
+                        li.className = 'feature-item-modal';
+                        li.innerHTML = `<i class="fas fa-check-circle"></i> <span>${feature}</span>`;
+                        modalFeaturesList.appendChild(li);
+                    });
+                }
+            }
+
+            // Show modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+
+    moduleCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const moduleKey = card.getAttribute('data-module');
+            openModal(moduleKey);
+        });
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
 
     // --- Live Toast Notifications ---
     const toastContainer = document.getElementById('toastContainer');

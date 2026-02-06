@@ -4,36 +4,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Durbin - Ta’limni tizimlashtiramiz</title>
+    <title>Durbin - Xususiy maktablar uchun yagona platforma</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts for modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-
-    <!-- Background Elements -->
-    <div class="bg-shape shape-1"></div>
-    <div class="bg-shape shape-2"></div>
-
-    <!-- Navigation -->
-    <nav class="navbar glass">
-        <div class="container nav-container">
-            <div class="logo">
-                <img src="logo.svg" alt="Durbin Logo" class="logo-img">
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="logo.svg" alt="Durbin">
             </div>
 
-            <ul class="nav-links">
-                <li><a href="#home" data-i18n="nav.home">Bosh sahifa</a></li>
-                <li><a href="#product" data-i18n="nav.product">Mahsulot</a></li>
-                <li><a href="#roles" data-i18n="nav.roles">Rollar</a></li>
-                <li><a href="#about" data-i18n="nav.about">Biz haqimizda</a></li>
-                <li><a href="#contact" data-i18n="nav.contact">Bog'lanish</a></li>
-            </ul>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link active" data-i18n="nav.home">Bosh sahifa</a>
+                <a href="#modules" class="nav-link" data-i18n="nav.product">Modullar</a>
+                <a href="#roles" class="nav-link" data-i18n="nav.roles">Rollar</a>
+                <a href="#features" class="nav-link" data-i18n="nav.features">Imkoniyatlar</a>
+                <a href="#about" class="nav-link" data-i18n="nav.about">Biz haqimizda</a>
+            </div>
 
             <div class="nav-actions">
                 <div class="lang-switcher">
@@ -41,572 +35,345 @@
                     <button class="lang-btn" data-lang="ru">RU</button>
                     <button class="lang-btn" data-lang="en">EN</button>
                 </div>
-                <a href="#contact" class="btn btn-primary" data-i18n="nav.demo">Demo so'rash</a>
-            </div>
-
-            <div class="hamburger">
-                <i class="fas fa-bars"></i>
+                <a href="#contact" class="btn-nav" data-i18n="nav.demo">Demo olish</a>
+                <button class="hamburger-btn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="container hero-container">
-            <div class="hero-content fade-in-up">
-                <div class="badge-new">Version 2.0</div>
-                <h1 data-i18n="hero.title">Ta’limni <span class="gradient-text">tizimlashtiramiz</span></h1>
-                <p data-i18n="hero.subtitle">Durbin — maktab va o'quv markazlari uchun yagona boshqaruv tizimi.</p>
-                <div class="hero-btns">
-                    <a href="#contact" class="btn btn-primary glow-effect" data-i18n="hero.cta_demo">Demo olish</a>
-                    <a href="https://t.me/durbin_manager" target="_blank" class="btn btn-outline"
-                        data-i18n="hero.cta_telegram">Telegram orqali</a>
+        <div class="hero-wrapper">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-star"></i>
+                    Yagona Raqamli Platforma
+                </div>
+                <h1 data-i18n="hero.title">Xususiy maktablar uchun<br><span class="gradient-text">to'liq boshqaruv
+                        tizimi</span></h1>
+                <p class="hero-text" data-i18n="hero.subtitle">Durbin — CRM, LMS, ERP va BI modullarini birlashtirib,
+                    maktab faoliyatini to'liq
+                    tizimlashtiradi. Ta'lim sifati markazda, barcha jarayonlar nazorat ostida.</p>
+
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary" data-i18n="hero.cta_demo">
+                        <i class="fas fa-play-circle"></i>
+                        Demo olish
+                    </a>
+                    <a href="https://t.me/durbin_manager" class="btn btn-outline" target="_blank"
+                        data-i18n="hero.cta_telegram">
+                        <i class="fab fa-telegram"></i>
+                        Telegram
+                    </a>
                 </div>
 
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <h3 class="counter" data-target="50">50+</h3>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>50+</h3>
                         <p data-i18n="stats.schools">Maktablar</p>
                     </div>
-                    <div class="stat-item">
-                        <h3 class="counter" data-target="12000">12000+</h3>
+                    <div class="stat">
+                        <h3>12,000+</h3>
                         <p data-i18n="stats.students">O'quvchilar</p>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat">
                         <h3>100%</h3>
                         <p data-i18n="stats.efficiency">Samaradorlik</p>
                     </div>
                 </div>
             </div>
-            <div class="hero-visual fade-in-left">
-                <!-- Concrete Dashboard Visual -->
-                <div class="dashboard-mockup glass">
-                    <div class="mockup-header">
-                        <div class="dots">
-                            <span></span><span></span><span></span>
-                        </div>
-                        <div class="mockup-search"></div>
-                    </div>
-                    <div class="mockup-body">
-                        <div class="sidebar-panel">
-                            <div class="sidebar-item active"><i class="fas fa-home"></i> <span>Home</span></div>
-                            <div class="sidebar-item"><i class="fas fa-user-graduate"></i> <span>Students</span></div>
-                            <div class="sidebar-item"><i class="fas fa-chalkboard-teacher"></i> <span>Teachers</span>
-                            </div>
-                            <div class="sidebar-item"><i class="fas fa-wallet"></i> <span>Finance</span></div>
-                            <div class="sidebar-item"><i class="fas fa-cog"></i> <span>Settings</span></div>
-                        </div>
-                        <div class="content-area-panel">
-                            <div class="panel-header">
-                                <div>
-                                    <h4>Overview</h4>
-                                    <small>Last 30 days</small>
-                                </div>
-                                <div class="avatar-circle"></div>
-                            </div>
 
-                            <div class="stats-grid-mini">
-                                <div class="stat-card-mini">
-                                    <span>Total Students</span>
-                                    <h5>12,450</h5>
+            <!-- 3D Dashboard Preview -->
+            <div class="hero-visual">
+                <div class="dashboard-3d">
+                    <div class="dashboard-window">
+                        <div class="window-header">
+                            <div class="window-dots">
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                                <span class="dot"></span>
+                            </div>
+                            <span class="window-title">Durbin Dashboard</span>
+                        </div>
+                        <div class="window-content">
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <div class="stat-icon blue">
+                                        <i class="fas fa-user-graduate"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <span class="stat-label" data-i18n="dashboard.students">O'quvchilar</span>
+                                        <span class="stat-value">12,450</span>
+                                    </div>
                                 </div>
-                                <div class="stat-card-mini">
-                                    <span>Revenue</span>
-                                    <h5>$450,000</h5>
+                                <div class="stat-card">
+                                    <div class="stat-icon red">
+                                        <i class="fas fa-dollar-sign"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <span class="stat-label" data-i18n="dashboard.income">Daromad</span>
+                                        <span class="stat-value">$450K</span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="chart-container-mini">
-                                <!-- Simple SVG Chart -->
-                                <svg viewBox="0 0 300 100" class="mini-chart">
-                                    <defs>
-                                        <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                            <stop offset="0%" style="stop-color:rgb(99, 102, 241);stop-opacity:0.3" />
-                                            <stop offset="100%" style="stop-color:rgb(99, 102, 241);stop-opacity:0" />
-                                        </linearGradient>
-                                    </defs>
-                                    <path d="M0,80 Q30,60 60,70 T120,40 T180,50 T240,20 T300,40 V100 H0 Z"
-                                        fill="url(#chartGrad)" />
-                                    <path d="M0,80 Q30,60 60,70 T120,40 T180,50 T240,20 T300,40" fill="none"
-                                        stroke="#6366f1" stroke-width="2" />
-                                </svg>
+                            <div class="chart-area">
+                                <div class="chart-bars">
+                                    <div class="bar" style="height: 40%"></div>
+                                    <div class="bar" style="height: 70%"></div>
+                                    <div class="bar" style="height: 55%"></div>
+                                    <div class="bar" style="height: 85%"></div>
+                                    <div class="bar" style="height: 65%"></div>
+                                    <div class="bar" style="height: 90%"></div>
+                                    <div class="bar" style="height: 75%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Floating Elements -->
-                    <div class="float-card glass card-1">
+                    <!-- Floating Cards -->
+                    <div class="floating-card card-1">
                         <i class="fas fa-check-circle"></i>
-                        <span>Active Now</span>
+                        <span data-i18n="dashboard.new_admission">Yangi qabul</span>
                     </div>
-                    <div class="float-card glass card-2">
+                    <div class="floating-card card-2">
                         <i class="fas fa-bell"></i>
-                        <span>New Lead</span>
+                        <span data-i18n="dashboard.new_messages">3 yangi xabar</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Product Features -->
-    <section id="product" class="section product">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 data-i18n="product.title" class="section-title">Tizim imkoniyatlari</h2>
-                <div class="title-line"></div>
+    <!-- Modules Section -->
+    <section id="modules" class="modules">
+        <div class="section-wrapper">
+            <div class="section-header">
+                <h2 data-i18n="product.title">Tizim Modullari</h2>
+                <p data-i18n="product.subtitle">Barcha jarayonlarni yagona platformada boshqaring</p>
             </div>
 
-            <div class="grid-4">
-                <div class="feature-card glass hover-lift">
-                    <div class="icon-box color-1">
+            <div class="modules-grid">
+                <div class="module-card" data-module="crm">
+                    <div class="module-icon blue">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3 data-i18n="product.crm_title">CRM</h3>
-                    <p data-i18n="product.crm_desc">Qabul jarayoni va lidlar.</p>
+                    <h3>CRM</h3>
+                    <h4 data-i18n="product.crm_title">Qabul va Savdo</h4>
+                    <p data-i18n="product.crm_desc">Barcha kanallardan lidlarni yig'ing va qabul voronkasini boshqaring.
+                    </p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Lead → Qabul → To'lov</li>
+                        <li><i class="fas fa-check"></i> Marketing tahlili</li>
+                        <li><i class="fas fa-check"></i> Ota-onalar bilan aloqa</li>
+                    </ul>
                 </div>
 
-                <div class="feature-card glass hover-lift">
-                    <div class="icon-box color-2">
-                        <i class="fas fa-book-open"></i>
+                <div class="module-card" data-module="lms">
+                    <div class="module-icon red">
+                        <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <h3 data-i18n="product.lms_title">LMS</h3>
-                    <p data-i18n="product.lms_desc">Elektron jurnal va baholar.</p>
+                    <h3>LMS</h3>
+                    <h4 data-i18n="product.lms_title">Ta'lim Jarayoni</h4>
+                    <p data-i18n="product.lms_desc">Dars jadvali, elektron jurnal va AI bilan uy vazifalari.</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Elektron jurnal</li>
+                        <li><i class="fas fa-check"></i> 5 va 100 ballik baholash</li>
+                        <li><i class="fas fa-check"></i> AI homework</li>
+                    </ul>
                 </div>
 
-                <div class="feature-card glass hover-lift">
-                    <div class="icon-box color-3">
-                        <i class="fas fa-building"></i>
-                    </div>
-                    <h3 data-i18n="product.erp_title">ERP</h3>
-                    <p data-i18n="product.erp_desc">Moliya va HR nazorati.</p>
-                </div>
-
-                <div class="feature-card glass hover-lift">
-                    <div class="icon-box color-4">
+                <div class="module-card" data-module="erp">
+                    <div class="module-icon blue">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 data-i18n="product.bi_title">BI & Tahlil</h3>
-                    <p data-i18n="product.bi_desc">Real vaqt rejimida hisobotlar.</p>
+                    <h3>ERP</h3>
+                    <h4 data-i18n="product.erp_title">Moliya va HR</h4>
+                    <p data-i18n="product.erp_desc">To'lovlar, ish haqi va resurslarni to'liq nazorat qiling.</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Naqd, karta, online</li>
+                        <li><i class="fas fa-check"></i> Cashflow va P&L</li>
+                        <li><i class="fas fa-check"></i> KPI oylik hisoblash</li>
+                    </ul>
+                </div>
+
+                <div class="module-card" data-module="bi">
+                    <div class="module-icon red">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>BI</h3>
+                    <h4 data-i18n="product.bi_title">Analitika</h4>
+                    <p data-i18n="product.bi_desc">Real vaqt statistikasi va AI tavsiyalar.</p>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Real-time dashboard</li>
+                        <li><i class="fas fa-check"></i> KPI nazorati</li>
+                        <li><i class="fas fa-check"></i> AI agent</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Roles Section -->
-    <section id="roles" class="section roles-section">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 data-i18n="roles.title" class="section-title">Kim uchun?</h2>
-            </div>
-
-            <div class="roles-tabs">
-                <div class="tab-buttons">
-                    <button class="tab-btn active" data-tab="ceo" data-i18n="roles.ceo">CEO</button>
-                    <button class="tab-btn" data-tab="director" data-i18n="roles.director">Direktor</button>
-                    <button class="tab-btn" data-tab="teacher" data-i18n="roles.teacher">O'qituvchi</button>
-                    <button class="tab-btn" data-tab="parent" data-i18n="roles.parent">Ota-ona</button>
-                </div>
-
-                <div class="tab-content glass">
-                    <div class="content-pane active" id="ceo">
-                        <div class="role-grid">
-                            <div class="role-text">
-                                <h3 data-i18n="roles.ceo">CEO</h3>
-                                <p data-i18n="roles.ceo_desc">Strategik boshqaruv.</p>
-                                <ul class="check-list">
-                                    <li><i class="fas fa-check-circle"></i> KPI Analytics</li>
-                                    <li><i class="fas fa-check-circle"></i> Financial Reports</li>
-                                    <li><i class="fas fa-check-circle"></i> Growth Metrics</li>
-                                </ul>
-                            </div>
-                            <div class="role-visual">
-                                <div class="dashboard-mockup ceo">
-                                    <div class="mockup-header">
-                                        <div class="mockup-dots">
-                                            <div class="dot red"></div>
-                                            <div class="dot yellow"></div>
-                                            <div class="dot green"></div>
-                                        </div>
-                                        <span class="mockup-title">Analytics</span>
-                                        <i class="fas fa-bars"></i>
-                                    </div>
-                                    <div class="stats-row">
-                                        <div class="stat-card">
-                                            <span class="stat-label">Total Revenue</span>
-                                            <span class="stat-value">$124k <span class="growth-badge">+12%</span></span>
-                                        </div>
-                                        <div class="stat-card">
-                                            <span class="stat-label">Students</span>
-                                            <span class="stat-value">850 <span class="growth-badge">+5%</span></span>
-                                        </div>
-                                    </div>
-                                    <div class="chart-container">
-                                        <div class="bar" style="height: 40%"></div>
-                                        <div class="bar" style="height: 60%"></div>
-                                        <div class="bar" style="height: 45%"></div>
-                                        <div class="bar" style="height: 80%"></div>
-                                        <div class="bar" style="height: 65%"></div>
-                                        <div class="bar" style="height: 90%"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Other contents will be populated by JS or simple hiding logic -->
-                    <div class="content-pane" id="director">
-                        <div class="role-grid">
-                            <div class="role-text">
-                                <h3 data-i18n="roles.director">Direktor</h3>
-                                <p data-i18n="roles.director_desc">Operatsion jarayonlar va xodimlar nazorati.</p>
-                                <ul class="check-list">
-                                    <li><i class="fas fa-check-circle"></i> Elektron jurnal</li>
-                                    <li><i class="fas fa-check-circle"></i> Davomat va baholash</li>
-                                    <li><i class="fas fa-check-circle"></i> O‘qituvchi yuklamasi va sifat nazorati</li>
-                                </ul>
-                            </div>
-                            <div class="role-visual">
-                                <div class="dashboard-mockup director">
-                                    <div class="mockup-header">
-                                        <div class="mockup-dots">
-                                            <div class="dot red"></div>
-                                            <div class="dot yellow"></div>
-                                            <div class="dot green"></div>
-                                        </div>
-                                        <span class="mockup-title">School Overview</span>
-                                    </div>
-                                    <div class="director-grid">
-                                        <div class="info-card">
-                                            <div class="chart-donut"></div>
-                                            <div>
-                                                <span class="stat-label">Attendance</span>
-                                                <span class="stat-value">92%</span>
-                                            </div>
-                                        </div>
-                                        <div class="info-card" style="display:block">
-                                            <div class="stat-label" style="margin-bottom:10px">Teacher Status</div>
-                                            <div class="list-item-row" style="margin-bottom:8px">
-                                                <span>Mr. Azimov</span>
-                                                <div class="status-dot active"></div>
-                                            </div>
-                                            <div class="list-item-row">
-                                                <span>Ms. Karimova</span>
-                                                <div class="status-dot active"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-pane" id="teacher">
-                        <div class="role-grid">
-                            <div class="role-text">
-                                <h3 data-i18n="roles.teacher">O'qituvchi</h3>
-                                <p data-i18n="roles.teacher_desc">Oson jurnal, uy vazifalari va oylik hisob-kitobi.</p>
-                                <ul class="check-list">
-                                    <li><i class="fas fa-check-circle"></i> Dars jadvali</li>
-                                    <li><i class="fas fa-check-circle"></i> Baholar, gameficatsiya ,AI homework</li>
-                                    <li><i class="fas fa-check-circle"></i> Ota-onalar bilan aloqa</li>
-                                </ul>
-                            </div>
-                            <div class="role-visual">
-                                <div class="dashboard-mockup teacher">
-                                    <div class="mockup-header">
-                                        <div class="mockup-dots">
-                                            <div class="dot red"></div>
-                                            <div class="dot yellow"></div>
-                                            <div class="dot green"></div>
-                                        </div>
-                                        <span class="mockup-title">Class 5-A</span>
-                                    </div>
-                                    <div class="class-grid">
-                                        <div class="student-avatar">
-                                            <i class="fas fa-user-graduate"></i> Vali
-                                        </div>
-                                        <div class="student-avatar">
-                                            <i class="fas fa-user-graduate"></i> Ali
-                                        </div>
-                                        <div class="student-avatar">
-                                            <i class="fas fa-user-graduate"></i> Salim
-                                        </div>
-                                    </div>
-                                    <div class="action-bar">
-                                        <div>
-                                            <span class="stat-label">Active Lesson</span>
-                                            <span class="stat-value" style="font-size: 1rem">Math</span>
-                                        </div>
-                                        <button class="grade-btn">Grade</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-pane" id="parent">
-                        <div class="role-grid">
-                            <div class="role-text">
-                                <h3 data-i18n="roles.parent">Ota-ona</h3>
-                                <p data-i18n="roles.parent_desc">Farzandining davomati va baholarini kuzatish.</p>
-                                <ul class="check-list">
-                                    <li><i class="fas fa-check-circle"></i> Baholar va davomat</li>
-                                    <li><i class="fas fa-check-circle"></i> To‘lovlar</li>
-                                    <li><i class="fas fa-check-circle"></i> Maktab bilan tez aloqa</li>
-                                </ul>
-                            </div>
-                            <div class="role-visual">
-                                <div class="dashboard-mockup parent">
-                                    <div class="mockup-header">
-                                        <div class="mockup-dots">
-                                            <div class="dot red"></div>
-                                            <div class="dot yellow"></div>
-                                            <div class="dot green"></div>
-                                        </div>
-                                        <span class="mockup-title">My Child</span>
-                                    </div>
-                                    <div class="parent-card">
-                                        <div class="child-profile">
-                                            <div class="child-avatar"><i class="fas fa-child"></i></div>
-                                            <span class="mockup-title">Azizbek (5-A)</span>
-                                        </div>
-                                        <div class="week-progress">
-                                            <div class="day-check checked">M</div>
-                                            <div class="day-check checked">T</div>
-                                            <div class="day-check checked">W</div>
-                                            <div class="day-check checked">T</div>
-                                            <div class="day-check">F</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Process Flow -->
-    <section class="section process">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 data-i18n="steps.title" class="section-title">Qanday ishlaydi?</h2>
-            </div>
-
-            <div class="process-steps">
-                <div class="step-item">
-                    <div class="step-icon"><i class="fas fa-filter"></i></div>
-                    <span data-i18n="steps.step1">Lid</span>
-                </div>
-                <div class="step-connector"></div>
-                <div class="step-item">
-                    <div class="step-icon"><i class="fas fa-user-plus"></i></div>
-                    <span data-i18n="steps.step2">Qabul</span>
-                </div>
-                <div class="step-connector"></div>
-                <div class="step-item">
-                    <div class="step-icon"><i class="fas fa-user-graduate"></i></div>
-                    <span data-i18n="steps.step3">O'quvchi</span>
-                </div>
-                <div class="step-connector"></div>
-                <div class="step-item">
-                    <div class="step-icon"><i class="fas fa-chalkboard"></i></div>
-                    <span data-i18n="steps.step4">Ta'lim</span>
-                </div>
-                <div class="step-connector"></div>
-                <div class="step-item">
-                    <div class="step-icon"><i class="fas fa-file-invoice-dollar"></i></div>
-                    <span data-i18n="steps.step5">Moliya</span>
-                </div>
-                <div class="step-connector"></div>
-                <div class="step-item">
-                    <div class="step-icon"><i class="fas fa-chart-pie"></i></div>
-                    <span data-i18n="steps.step6">Analitika</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison Section -->
-    <section class="section comparison-section">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 class="section-title">Nega aynan Durbin?</h2>
-                <div class="title-line"></div>
-                <p class="section-subtitle">Eski boshqaruv usullari va zamonaviy tizim farqi</p>
-            </div>
-
-            <div class="comparison-grid">
-                <!-- Old Way -->
-                <div class="compare-card old-way">
-                    <div class="compare-header">
-                        <h3>❌ Eski usul</h3>
-                        <p>Excel, Daftar, Telegram guruhlar</p>
-                    </div>
-                    <ul class="compare-list">
-                        <li><i class="fas fa-times-circle"></i> O'quvchilar va to'lovlar hisobi chalkash</li>
-                        <li><i class="fas fa-times-circle"></i> Ota-onalar bilan aloqa qiyin (SMS/Tel)</li>
-                        <li><i class="fas fa-times-circle"></i> O'qituvchilar dars o'rniga qog'oz to'ldiradi</li>
-                        <li><i class="fas fa-times-circle"></i> Moliyaviy oqim to'liq nazoratda emas</li>
-                        <li><i class="fas fa-times-circle"></i> Ma'lumotlar yo'qolish xavfi yuqori</li>
-                    </ul>
-                </div>
-
-                <!-- Durbin Way -->
-                <div class="compare-card new-way">
-                    <div class="compare-header">
-                        <h3>✅ Durbin Tizimi</h3>
-                        <p>Yagona raqamli platforma</p>
-                    </div>
-                    <ul class="compare-list">
-                        <li><i class="fas fa-check-circle"></i> Barcha bo‘limlar yagona tizim orqali boshqariladi</li>
-                        <li><i class="fas fa-check-circle"></i> Rahbariyat uchun real vaqtli dashboardlar</li>
-                        <li><i class="fas fa-check-circle"></i> Qabul, dars va moliya jarayonlari avtomatlashtirilgan</li>
-                        <li><i class="fas fa-check-circle"></i> O‘qituvchi, ota-ona va o‘quvchi uchun alohida kabinet</li>
-                        <li><i class="fas fa-check-circle"></i> Har bir amal bo‘yicha to‘liq tarix va nazorat</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Chaos to Order Simulator -->
-    <section class="section chaos-section">
-        <div class="container text-center">
+    <section id="roles" class="roles">
+        <div class="section-wrapper">
             <div class="section-header">
-                <h2 class="section-title">Tartibsizlikdan... Tizimga</h2>
-                <div class="title-line"></div>
-                <p class="section-subtitle">Durbin biznesingizni qanday o'zgartirishini ko'ring</p>
+                <h2 data-i18n="roles.title">Har bir foydalanuvchi uchun</h2>
+                <p data-i18n="roles.subtitle">Rolga mos ma'lumotlar va funksiyalar</p>
             </div>
 
-            <div class="simulator-container">
-                <canvas id="chaosCanvas"></canvas>
-                <div class="simulator-overlay">
-                    <button id="systematizeBtn" class="btn btn-primary pulse-btn">
-                        <i class="fas fa-magic"></i> Tizimlashtirish
-                    </button>
-                    <p class="simulator-hint">Tugmani bosing va o'zgarishni ko'ring!</p>
+            <div class="roles-grid">
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3 data-i18n="roles.ceo">Asoschi</h3>
+                    <p data-i18n="roles.ceo_desc">To'liq tizimni ko'rish va strategik qarorlar</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3 data-i18n="roles.director">Direktor</h3>
+                    <p data-i18n="roles.director_desc">Operatsion boshqaruv va xodimlar nazorati</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 data-i18n="roles.teacher">O'qituvchi</h3>
+                    <p data-i18n="roles.teacher_desc">Faqat o'z sinf va fanlarini boshqarish</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 data-i18n="roles.parent">Ota-ona</h3>
+                    <p data-i18n="roles.parent_desc">Farzandining davomati va baholarini kuzatish</p>
+                </div>
+                <div class="role-card">
+                    <div class="role-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3 data-i18n="roles.student">O'quvchi</h3>
+                    <p data-i18n="roles.student_desc">O'z natijalarini ko'rish va rivojlanish</p>
                 </div>
             </div>
         </div>
     </section>
-    <section id="about" class="section about">
-        <div class="container">
-            <div class="section-header text-center">
-                <h2 data-i18n="about.title" class="section-title">Biz haqimizda</h2>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-wrapper">
+            <div class="section-header">
+                <h2 data-i18n="features.title">Ta'lim tajribasi</h2>
+                <p data-i18n="features.subtitle">Ota-ona va o'quvchilar uchun qulay interfeys</p>
             </div>
 
-            <div class="glass p-5">
-                <!-- Intro -->
-                <div class="about-intro text-center mb-5">
-                    <p class="lead-text"><strong>Durbin</strong> — xususiy maktablar va o‘quv markazlari faoliyatini
-                        to‘liq tizimlashtirish uchun yaratilgan yagona raqamli platforma.</p>
-                    <p class="mt-3">Bugungi ta’lim muassasalarida boshqaruv, qabul, dars jarayoni, moliya va tahlil
-                        ko‘pincha alohida-alohida, qo‘lda yoki bir-biriga ulanmagan tizimlarda yuritiladi. Bu esa
-                        nazoratning yo‘qolishi, xatolar va vaqt isrofini keltirib chiqaradi. <strong>Durbin aynan shu
-                            muammoni hal qilish uchun ishlab chiqilgan.</strong></p>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h4 data-i18n="features.mobile_title">Mobil Ilova</h4>
+                    <p data-i18n="features.mobile_desc">iOS va Android</p>
                 </div>
+                <div class="feature-item">
+                    <i class="fas fa-bell"></i>
+                    <h4 data-i18n="features.notif_title">Xabarnomalar</h4>
+                    <p data-i18n="features.notif_desc">Push, SMS, Telegram</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-trophy"></i>
+                    <h4 data-i18n="features.gamified_title">Gamifikatsiya</h4>
+                    <p data-i18n="features.gamified_desc">Motivatsiya tizimi</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-comments"></i>
+                    <h4 data-i18n="features.feedback_title">Feedback</h4>
+                    <p data-i18n="features.feedback_desc">Tezkor aloqa</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-tasks"></i>
+                    <h4 data-i18n="features.hw_title">AI Homework</h4>
+                    <p data-i18n="features.hw_desc">Aqlli nazorat</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-pie"></i>
+                    <h4 data-i18n="features.progress_title">Progress</h4>
+                    <p data-i18n="features.progress_desc">Real vaqt tahlili</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <div class="divider"></div>
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-wrapper">
+            <h2 data-i18n="about.title">Durbin haqida</h2>
+            <p class="lead" data-i18n="about.lead">Durbin — xususiy maktablar va o'quv markazlari faoliyatini to'liq
+                tizimlashtirish uchun
+                yaratilgan yagona raqamli platforma.</p>
+            <p data-i18n="about.mission">Bizning maqsadimiz — ta'lim muassasalarida tartibli boshqaruvni yo'lga qo'yish,
+                insan omiliga
+                bog'liqlikni kamaytirish va shaffoflikni oshirish.</p>
 
-                <!-- Approach -->
-                <div class="about-grid">
-                    <div class="about-col">
-                        <h3>Bizning yondashuvimiz</h3>
-                        <p class="mb-4">Durbin ta’lim muassasasining barcha jarayonlarini bitta yagona tizimga
-                            birlashtiradi:</p>
-                        <div class="approach-list">
-                            <div class="approach-item">
-                                <span class="tag-badge">CRM</span>
-                                <span>Qabul va sotuv</span>
-                            </div>
-                            <div class="approach-item">
-                                <span class="tag-badge">LMS</span>
-                                <span>O‘quv jarayoni</span>
-                            </div>
-                            <div class="approach-item">
-                                <span class="tag-badge">ERP</span>
-                                <span>Xodimlar va moliya</span>
-                            </div>
-                            <div class="approach-item">
-                                <span class="tag-badge">BI</span>
-                                <span>Real vaqt tahlili va hisobotlar</span>
-                            </div>
-                        </div>
-                        <p class="mt-3 text-muted">Natijada rahbariyat aniq raqamlar asosida qaror qabul qiladi,
-                            o‘qituvchilar esa ortiqcha hujjatlarsiz o‘z ishiga e’tibor qaratadi.</p>
-                    </div>
-
-                    <div class="about-col">
-                        <h3>Bizning maqsadimiz</h3>
-                        <p class="mb-4"><strong>Ta’limni tizimlashtirish.</strong> Bizning asosiy maqsadimiz — ta’lim
-                            muassasalarida:</p>
-                        <ul class="goals-list">
-                            <li>
-                                <i class="fas fa-sitemap"></i>
-                                <span>Tartibli boshqaruvni yo‘lga qo‘yish</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-user-shield"></i>
-                                <span>Inson omiliga bog‘liqlikni kamaytirish</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-eye"></i>
-                                <span>Shaffoflik va nazoratni oshirish</span>
-                            </li>
-                            <li>
-                                <i class="fas fa-rocket"></i>
-                                <span>O‘sish va rivojlanish uchun mustahkam raqamli asos yaratish</span>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="about-features">
+                <div class="about-feature">
+                    <i class="fas fa-check-circle"></i>
+                    <span data-i18n="about.f1">Tartibli boshqaruv</span>
+                </div>
+                <div class="about-feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <span data-i18n="about.f2">Ma'lumotlar xavfsizligi</span>
+                </div>
+                <div class="about-feature">
+                    <i class="fas fa-rocket"></i>
+                    <span data-i18n="about.f3">O'sish uchun asos</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="section contact">
-        <div class="container contact-container">
-            <div class="contact-info">
-                <h2 data-i18n="contact.title">Hoziroq boshlang</h2>
-                <p data-i18n="contact.desc">Demo so'rash uchun formani to'ldiring.</p>
-                <div class="contact-methods">
-                    <a href="tel:+998957998886" class="method-item">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>+998 95 799 88 86</span>
-                    </a>
-                    <a href="https://t.me/durbin_manager" class="method-item">
-                        <i class="fab fa-telegram"></i>
-                        <span>@durbin_manager</span>
-                    </a>
-                </div>
-            </div>
+    <section id="contact" class="contact">
+        <div class="contact-wrapper">
+            <h2 data-i18n="contact.title">Hoziroq boshlang</h2>
+            <p data-i18n="contact.desc">Tizim imkoniyatlari bilan tanishish uchun bepul demo so'rang</p>
 
-            <form class="contact-form glass" id="contactForm">
-                <div class="form-group">
-                    <input type="text" id="name" name="name" placeholder="Ismingiz" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" id="school" name="school" placeholder="Maktabingiz (raqami yoki nomi)" required>
-                </div>
-                <div class="form-group">
-                    <input type="tel" id="phone" name="phone" placeholder="Telefon raqamingiz" required>
-                </div>
-                <button type="submit" class="btn btn-primary btn-block" id="submitBtn">
+            <form class="contact-form" id="contactForm">
+                <input type="text" id="name" data-i18n-placeholder="contact.name_placeholder" placeholder="Ismingiz"
+                    required>
+                <input type="text" id="school" data-i18n-placeholder="contact.school_placeholder"
+                    placeholder="Maktab nomi" required>
+                <input type="tel" id="phone" data-i18n-placeholder="contact.phone_placeholder"
+                    placeholder="Telefon raqam" required>
+                <button type="submit" class="btn btn-submit" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i>
                     <span class="btn-text" data-i18n="contact.submit">Yuborish</span>
-                    <span class="btn-loading" style="display: none;"><i class="fas fa-spinner fa-spin"></i></span>
+                    <span class="btn-loading" style="display: none;">Wait...</span>
                 </button>
                 <div id="formMessage" class="form-message"></div>
             </form>
+
+            <div class="contact-info">
+                <a href="tel:+998957998886">
+                    <i class="fas fa-phone"></i>
+                    +998 95 799 88 86
+                </a>
+                <a href="https://t.me/durbin_manager" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                    @durbin_manager
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-logo">
-                <h3>Durbin</h3>
-                <p>© 2024 Durbin Platform. All rights reserved.</p>
-            </div>
-            <div class="social-links">
+    <footer class="footer">
+        <div class="footer-content">
+            <p data-i18n="footer.copy">© 2024 Durbin Platform. Barcha huquqlar himoyalangan.</p>
+            <div class="social">
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="https://t.me/durbin_manager"><i class="fab fa-telegram"></i></a>
                 <a href="#"><i class="fab fa-facebook"></i></a>
@@ -614,8 +381,39 @@
         </div>
     </footer>
 
-    <!-- Toast Notifications Container -->
-    <div id="toastContainer" class="toast-container"></div>
+    <!-- Module Detail Modal -->
+    <div id="moduleModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="modal-title-wrap">
+                        <span class="modal-badge" data-i18n="modals.details">Batafsil ma'lumot</span>
+                        <h2 id="modalTitle">Module Title</h2>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p id="modalSubtitle" class="modal-subtitle">Detailed description goes here.</p>
+                    <div id="modalGrid" class="modal-grid">
+                        <!-- Cards will be injected here -->
+                    </div>
+                    <div id="modalFeaturesWrap" class="modal-features-wrap">
+                        <ul id="modalFeaturesList">
+                            <!-- Standard features fallback -->
+                        </ul>
+                    </div>
+                    <div class="modal-spacer" style="height: 60px; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     <script src="content.js"></script>
     <script src="script.js"></script>
