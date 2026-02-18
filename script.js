@@ -477,50 +477,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // --- Live Toast Notifications ---
-    const toastContainer = document.getElementById('toastContainer');
 
-    const notifications = [
-        { icon: '👤', title: "Yangi o'quvchi", message: "Alisher Karimov ro'yxatdan o'tdi" },
-        { icon: '💰', title: "To'lov qabul qilindi", message: "Click orqali 500,000 so'm to'landi" },
-        { icon: '📊', title: "Baholar kiritildi", message: "Matematika fan bo'yicha 15 baho" },
-        { icon: '📝', title: "Davomat belgilandi", message: "7-A sinf uchun davomat yakunlandi" },
-        { icon: '👨‍🏫', title: "O'qituvchi kiritdi", message: "Fizika darsini boshladi" },
-        { icon: '📱', title: "Ota-ona ko'rdi", message: "Sardor Azizov baholarni tekshirdi" },
-        { icon: '💳', title: "Plastik to'lov", message: "Payme orqali 750,000 so'm" },
-        { icon: '📈', title: "Statistika yangilandi", message: "Oylik hisobot tayyor" },
-        { icon: '🎓', title: "Guruh to'ldi", message: "Ingliz tili guruhiga 12-o'quvchi" },
-        { icon: '🔔', title: "Eslatma yuborildi", message: "Ota-onalarga SMS jo'natildi" }
-    ];
-
-    function showToast() {
-        const notification = notifications[Math.floor(Math.random() * notifications.length)];
-
-        const toast = document.createElement('div');
-        toast.className = 'toast';
-        toast.innerHTML = `
-            <div class="toast-icon">${notification.icon}</div>
-            <div class="toast-content">
-                <div class="toast-title">${notification.title}</div>
-                <div class="toast-message">${notification.message}</div>
-            </div>
-        `;
-
-        toastContainer.appendChild(toast);
-
-        // Remove after 4 seconds
-        setTimeout(() => {
-            toast.classList.add('removing');
-            setTimeout(() => toast.remove(), 300);
-        }, 4000);
-    }
-
-    // Show first notification after 3 seconds, then random intervals
-    setTimeout(() => {
-        showToast();
-        setInterval(() => {
-            // Random interval between 5-8 seconds
-            setTimeout(showToast, Math.random() * 3000 + 5000);
-        }, 8000);
-    }, 3000);
 });
