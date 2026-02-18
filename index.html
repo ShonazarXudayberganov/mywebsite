@@ -27,6 +27,7 @@
                 <a href="#roles" class="nav-link" data-i18n="nav.roles">Rollar</a>
                 <a href="#features" class="nav-link" data-i18n="nav.features">Imkoniyatlar</a>
                 <a href="#about" class="nav-link" data-i18n="nav.about">Biz haqimizda</a>
+                <a href="#contact" class="nav-link" data-i18n="nav.contact">Bog'lanish</a>
             </div>
 
             <div class="nav-actions">
@@ -309,27 +310,80 @@
 
     <!-- About Section -->
     <section id="about" class="about">
-        <div class="about-wrapper">
-            <h2 data-i18n="about.title">Durbin haqida</h2>
-            <p class="lead" data-i18n="about.lead">Durbin — xususiy maktablar va o'quv markazlari faoliyatini to'liq
-                tizimlashtirish uchun
-                yaratilgan yagona raqamli platforma.</p>
-            <p data-i18n="about.mission">Bizning maqsadimiz — ta'lim muassasalarida tartibli boshqaruvni yo'lga qo'yish,
-                insan omiliga
-                bog'liqlikni kamaytirish va shaffoflikni oshirish.</p>
+        <div class="about-wrapper-new">
+            <!-- Left: Text -->
+            <div class="about-left">
+                <div class="hero-badge" style="margin-bottom: 24px;">
+                    <i class="fas fa-star"></i>
+                    <span data-i18n="about.badge">Durbin haqida</span>
+                </div>
+                <h2 data-i18n="about.title">Biz haqimizda</h2>
+                <p class="lead" data-i18n="about.lead">Durbin — xususiy maktablar va o'quv markazlari faoliyatini to'liq
+                    tizimlashtirish uchun yaratilgan yagona raqamli platforma.</p>
+                <p data-i18n="about.mission">Bizning maqsadimiz — ta'lim muassasalarida tartibli boshqaruvni yo'lga qo'yish,
+                    insan omiliga bog'liqlikni kamaytirish va shaffoflikni oshirish.</p>
 
-            <div class="about-features">
-                <div class="about-feature">
-                    <i class="fas fa-check-circle"></i>
-                    <span data-i18n="about.f1">Tartibli boshqaruv</span>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span data-i18n="about.f1">Tartibli boshqaruv</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span data-i18n="about.f2">Ma'lumotlar xavfsizligi</span>
+                    </div>
+                    <div class="about-feature">
+                        <i class="fas fa-rocket"></i>
+                        <span data-i18n="about.f3">O'sish uchun asos</span>
+                    </div>
                 </div>
-                <div class="about-feature">
-                    <i class="fas fa-shield-alt"></i>
-                    <span data-i18n="about.f2">Ma'lumotlar xavfsizligi</span>
-                </div>
-                <div class="about-feature">
-                    <i class="fas fa-rocket"></i>
-                    <span data-i18n="about.f3">O'sish uchun asos</span>
+            </div>
+
+            <!-- Right: Stats Cards -->
+            <div class="about-right">
+                <div class="about-stats-grid">
+                    <div class="about-stat-card">
+                        <div class="about-stat-icon" style="background: linear-gradient(135deg, var(--blue), #4f46e5);">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <div class="about-stat-value">50+</div>
+                        <div class="about-stat-label" data-i18n="stats.schools">Maktablar</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-icon" style="background: linear-gradient(135deg, var(--red), #f97316);">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="about-stat-value">12,000+</div>
+                        <div class="about-stat-label" data-i18n="stats.students">O'quvchilar</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="about-stat-value">100%</div>
+                        <div class="about-stat-label" data-i18n="stats.efficiency">Samaradorlik</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="about-stat-value">24/7</div>
+                        <div class="about-stat-label" data-i18n="about.support">Texnik yordam</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-icon" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <div class="about-stat-value">4</div>
+                        <div class="about-stat-label" data-i18n="about.modules">Asosiy modul</div>
+                    </div>
+                    <div class="about-stat-card">
+                        <div class="about-stat-icon" style="background: linear-gradient(135deg, #ec4899, #db2777);">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <div class="about-stat-value">98%</div>
+                        <div class="about-stat-label" data-i18n="about.satisfaction">Mijoz mamnuniyati</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -339,7 +393,7 @@
     <section id="contact" class="contact">
         <div class="contact-wrapper">
             <h2 data-i18n="contact.title">Hoziroq boshlang</h2>
-            <p data-i18n="contact.desc">Tizim imkoniyatlari bilan tanishish uchun bepul demo so'rang</p>
+            <p data-i18n="contact.desc">Demo versiyadan foydalanish uchun raqamingizni qoldiring!</p>
 
             <form class="contact-form" id="contactForm">
                 <input type="text" id="name" data-i18n-placeholder="contact.name_placeholder" placeholder="Ismingiz"
@@ -414,6 +468,9 @@
         </div>
     </div>
     </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script src="content.js"></script>
     <script src="script.js"></script>

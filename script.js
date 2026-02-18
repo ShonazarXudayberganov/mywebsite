@@ -56,15 +56,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function setActiveLink() {
         let currentSection = '';
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-
-            if (window.scrollY >= sectionTop - 100) {
-                currentSection = section.getAttribute('id');
-            }
-        });
+        // Sahifa eng pastiga yetgan bo'lsa — oxirgi bo'lim aktiv
+        if (scrollY + windowHeight >= docHeight - 10) {
+            const lastSection = sections[sections.length - 1];
+            currentSection = lastSection ? lastSection.getAttribute('id') : '';
+        } else {
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 150) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+        }
 
         navLinks.forEach(link => {
             link.classList.remove('active');
@@ -347,20 +354,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 `📞 <b>Telefon:</b> ${phone}\n\n` +
                 `<i>Durbin saytidan yuborildi</i>`;
 
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
 
             fetch(url, {
-                method: 'GET',
-                mode: 'no-cors'
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
             })
-                .then(() => {
-                    formMessage.textContent = "Ma'lumotlar muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.";
-                    formMessage.classList.add('success');
-                    contactForm.reset();
+                .then(res => res.json())
+                .then(data => {
+                    if (data.ok) {
+                        formMessage.textContent = "Ma'lumotlar muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.";
+                        formMessage.classList.add('success');
+                        contactForm.reset();
+                    } else {
+                        throw new Error(data.description || 'Telegram xatosi');
+                    }
                 })
                 .catch(error => {
                     console.error('Error!', error);
-                    formMessage.textContent = "Internet xatosi. Iltimos, qayta urinib ko'ring.";
+                    formMessage.textContent = "Xato yuz berdi. Iltimos, telefon orqali bog'laning.";
                     formMessage.classList.add('error');
                 })
                 .finally(() => {
@@ -440,7 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeModal() {
         modal.classList.remove('active');
-        document.body.style.overflow = ''; // Restore scrolling
+        document.body.style.overflow = '';
     }
 
     moduleCards.forEach(card => {

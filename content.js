@@ -7,7 +7,8 @@ const translations = {
             features: "Imkoniyatlar",
             about: "Biz haqimizda",
             contact: "Bog'lanish",
-            demo: "Demo olish"
+            demo: "Demo olish",
+            contact: "Bog'lanish"
         },
         dashboard: {
             students: "O'quvchilar",
@@ -83,11 +84,15 @@ const translations = {
             mission: "Bizning maqsadimiz — ta'lim muassasalarida tartibli boshqaruvni yo'lga qo'yish, insan omiliga bog'liqlikni kamaytirish va shaffoflikni oshirish.",
             f1: "Tartibli boshqaruv",
             f2: "Ma'lumotlar xavfsizligi",
-            f3: "O'sish uchun asos"
+            f3: "O'sish uchun asos",
+            badge: "Durbin haqida",
+            support: "Texnik yordam",
+            modules: "Asosiy modul",
+            satisfaction: "Mijoz mamnuniyati"
         },
         contact: {
             title: "Hoziroq boshlang",
-            desc: "Tizim imkoniyatlari bilan tanishish uchun bepul demo so'rang",
+            desc: "Demo versiyadan foydalanish uchun raqamingizni qoldiring!",
             name_placeholder: "Ismingiz",
             school_placeholder: "Maktab nomi",
             phone_placeholder: "Telefon raqam",
@@ -292,7 +297,8 @@ const translations = {
             features: "Возможности",
             about: "О нас",
             contact: "Контакты",
-            demo: "Получить демо"
+            demo: "Получить демо",
+            contact: "Контакты"
         },
         dashboard: {
             students: "Ученики",
@@ -368,11 +374,15 @@ const translations = {
             mission: "Наша цель — наладить упорядоченное управление в образовательных учреждениях, снизить зависимость от человеческого фактора и повысить прозрачность.",
             f1: "Упорядоченное управление",
             f2: "Безопасность данных",
-            f3: "Основа для роста"
+            f3: "Основа для роста",
+            badge: "О нас",
+            support: "Тех. поддержка",
+            modules: "Основных модуля",
+            satisfaction: "Довольных клиентов"
         },
         contact: {
             title: "Начните сейчас",
-            desc: "Запросите бесплатную демо-версию, чтобы ознакомиться с возможностями системы",
+            desc: "Оставьте свой номер, чтобы воспользоваться демо-версией!",
             name_placeholder: "Ваше имя",
             school_placeholder: "Название школы",
             phone_placeholder: "Номер телефона",
@@ -433,7 +443,8 @@ const translations = {
             features: "Features",
             about: "About",
             contact: "Contact",
-            demo: "Get Demo"
+            demo: "Get Demo",
+            contact: "Contact"
         },
         dashboard: {
             students: "Students",
@@ -509,11 +520,15 @@ const translations = {
             mission: "Our goal is to establish orderly management in educational institutions, reduce dependence on the human factor, and increase transparency.",
             f1: "Orderly Management",
             f2: "Data Security",
-            f3: "Basis for Growth"
+            f3: "Basis for Growth",
+            badge: "About Us",
+            support: "Tech Support",
+            modules: "Core Modules",
+            satisfaction: "Client Satisfaction"
         },
         contact: {
             title: "Start Now",
-            desc: "Request a free demo to explore system capabilities",
+            desc: "Leave your number to get access to the demo version!",
             name_placeholder: "Your Name",
             school_placeholder: "School Name",
             phone_placeholder: "Phone Number",
