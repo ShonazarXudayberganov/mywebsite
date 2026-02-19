@@ -27,6 +27,10 @@ const translations = {
             students: "O'quvchilar",
             efficiency: "Samaradorlik"
         },
+        hero: {
+            modules: "Asosiy modul",
+            support: "Texnik yordam"
+        },
         product: {
             title: "Durbin Tizimi Modullari",
             subtitle: "Barcha jarayonlarni yagona platformada boshqaring",
@@ -310,7 +314,9 @@ const translations = {
             title: "Единая цифровая платформа для <span class='gradient-text'>частных школ</span>",
             subtitle: "Durbin — платформа, объединяющая CRM, LMS, ERP и BI модули. Качество образования в центре, все процессы под контролем.",
             cta_demo: "Получить демо",
-            cta_telegram: "Написать в Telegram"
+            cta_telegram: "Написать в Telegram",
+            modules: "Основных модуля",
+            support: "Тех. поддержка"
         },
         stats: {
             schools: "Школ",
@@ -456,7 +462,9 @@ const translations = {
             title: "Unified Digital Platform for <span class='gradient-text'>Private Schools</span>",
             subtitle: "Durbin — a platform that combines CRM, LMS, ERP and BI modules. Education quality at the center, all processes under control.",
             cta_demo: "Get Demo",
-            cta_telegram: "Write on Telegram"
+            cta_telegram: "Write on Telegram",
+            modules: "Core Modules",
+            support: "Tech Support"
         },
         stats: {
             schools: "Schools",
