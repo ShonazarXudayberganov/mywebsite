@@ -1,5 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // --- Phone Input Formatter ---
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', (e) => {
+            // Faqat raqamlarni qabul qilish
+            let value = e.target.value.replace(/\D/g, '');
+            
+            // Maksimum 9 ta raqam
+            value = value.substring(0, 9);
+            
+            // Formatlash: 93 741 95 95
+            let formatted = '';
+            if (value.length > 0) {
+                formatted = value.substring(0, 2);
+                if (value.length > 2) {
+                    formatted += ' ' + value.substring(2, 5);
+                }
+                if (value.length > 5) {
+                    formatted += ' ' + value.substring(5, 7);
+                }
+                if (value.length > 7) {
+                    formatted += ' ' + value.substring(7, 9);
+                }
+            }
+            
+            e.target.value = formatted;
+        });
+    }
+
     // --- Language Switcher ---
     const langBtns = document.querySelectorAll('.lang-btn');
     let currentLang = 'uz'; // Default language
@@ -346,7 +375,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const name = document.getElementById('name').value;
             const school = document.getElementById('school').value;
-            const phone = document.getElementById('phone').value;
+            const phoneInput = document.getElementById('phone').value.replace(/\s/g, '');
+            const phone = '+998' + phoneInput;
 
             const message = `<b>Yangi Lid 🎓</b>\n\n` +
                 `👤 <b>Ism:</b> ${name}\n` +

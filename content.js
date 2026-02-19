@@ -80,7 +80,7 @@ const translations = {
         },
         about: {
             title: "Durbin haqida",
-            lead: "Durbin — xususiy maktablar va o'quv markazlari faoliyatini to'liq tizimlashtirish uchun yaratilgan yagona raqamli platforma.",
+            lead: "Durbin — xususiy maktablar faoliyatini to'liq tizimlashtirish uchun yaratilgan yagona raqamli platforma.",
             mission: "Bizning maqsadimiz — ta'lim muassasalarida tartibli boshqaruvni yo'lga qo'yish, insan omiliga bog'liqlikni kamaytirish va shaffoflikni oshirish.",
             f1: "Tartibli boshqaruv",
             f2: "Ma'lumotlar xavfsizligi",
@@ -370,7 +370,7 @@ const translations = {
         },
         about: {
             title: "О Durbin",
-            lead: "Durbin — это единая цифровая платформа, созданная для полной систематизации деятельности частных школ и учебных центров.",
+            lead: "Durbin — это единая цифровая платформа, созданная для полной систематизации деятельности частных школ.",
             mission: "Наша цель — наладить упорядоченное управление в образовательных учреждениях, снизить зависимость от человеческого фактора и повысить прозрачность.",
             f1: "Упорядоченное управление",
             f2: "Безопасность данных",
@@ -516,7 +516,7 @@ const translations = {
         },
         about: {
             title: "About Durbin",
-            lead: "Durbin is a unified digital platform created for full systematization of private schools and training centers.",
+            lead: "Durbin is a unified digital platform created for full systematization of private schools.",
             mission: "Our goal is to establish orderly management in educational institutions, reduce dependence on the human factor, and increase transparency.",
             f1: "Orderly Management",
             f2: "Data Security",

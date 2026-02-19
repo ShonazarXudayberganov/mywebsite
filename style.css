@@ -770,7 +770,7 @@ section {
 /* About Right — Stats Grid */
 .about-stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
@@ -891,6 +891,45 @@ section {
 
 .contact-form input::placeholder {
     color: rgba(255, 255, 255, 0.7);
+}
+
+/* Phone Input Wrapper */
+.phone-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 0 20px;
+    height: 56px;
+}
+
+.phone-input-wrapper:focus-within {
+    border-color: white;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.phone-prefix {
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
+.phone-input {
+    background: transparent !important;
+    border: none !important;
+    color: white;
+    font-size: 16px;
+    flex: 1;
+    padding: 0 !important;
+    outline: none;
+    letter-spacing: 1px;
+}
+
+.phone-input::placeholder {
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .contact-form input:focus {

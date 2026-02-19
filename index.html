@@ -318,7 +318,7 @@
                     <span data-i18n="about.badge">Durbin haqida</span>
                 </div>
                 <h2 data-i18n="about.title">Biz haqimizda</h2>
-                <p class="lead" data-i18n="about.lead">Durbin — xususiy maktablar va o'quv markazlari faoliyatini to'liq
+                <p class="lead" data-i18n="about.lead">Durbin — xususiy maktablar faoliyatini to'liq
                     tizimlashtirish uchun yaratilgan yagona raqamli platforma.</p>
                 <p data-i18n="about.mission">Bizning maqsadimiz — ta'lim muassasalarida tartibli boshqaruvni yo'lga qo'yish,
                     insan omiliga bog'liqlikni kamaytirish va shaffoflikni oshirish.</p>
@@ -342,20 +342,6 @@
             <!-- Right: Stats Cards -->
             <div class="about-right">
                 <div class="about-stats-grid">
-                    <div class="about-stat-card">
-                        <div class="about-stat-icon" style="background: linear-gradient(135deg, var(--blue), #4f46e5);">
-                            <i class="fas fa-school"></i>
-                        </div>
-                        <div class="about-stat-value">50+</div>
-                        <div class="about-stat-label" data-i18n="stats.schools">Maktablar</div>
-                    </div>
-                    <div class="about-stat-card">
-                        <div class="about-stat-icon" style="background: linear-gradient(135deg, var(--red), #f97316);">
-                            <i class="fas fa-user-graduate"></i>
-                        </div>
-                        <div class="about-stat-value">12,000+</div>
-                        <div class="about-stat-label" data-i18n="stats.students">O'quvchilar</div>
-                    </div>
                     <div class="about-stat-card">
                         <div class="about-stat-icon" style="background: linear-gradient(135deg, #10b981, #059669);">
                             <i class="fas fa-chart-line"></i>
@@ -400,8 +386,11 @@
                     required>
                 <input type="text" id="school" data-i18n-placeholder="contact.school_placeholder"
                     placeholder="Maktab nomi" required>
-                <input type="tel" id="phone" data-i18n-placeholder="contact.phone_placeholder"
-                    placeholder="Telefon raqam" required>
+                <div class="phone-input-wrapper">
+                    <span class="phone-prefix">+998</span>
+                    <input type="tel" id="phone" class="phone-input" maxlength="12" pattern="[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2}"
+                        placeholder="90 123 45 67" required>
+                </div>
                 <button type="submit" class="btn btn-submit" id="submitBtn">
                     <i class="fas fa-paper-plane"></i>
                     <span class="btn-text" data-i18n="contact.submit">Yuborish</span>
