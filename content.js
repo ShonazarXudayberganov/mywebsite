@@ -28,7 +28,7 @@ const translations = {
             efficiency: "Samaradorlik"
         },
         hero: {
-            modules: "Asosiy modul",
+            satisfaction: "Mijoz mamnuniyati",
             support: "Texnik yordam"
         },
         product: {
@@ -315,7 +315,7 @@ const translations = {
             subtitle: "Durbin — платформа, объединяющая CRM, LMS, ERP и BI модули. Качество образования в центре, все процессы под контролем.",
             cta_demo: "Получить демо",
             cta_telegram: "Написать в Telegram",
-            modules: "Основных модуля",
+            satisfaction: "Довольных клиентов",
             support: "Тех. поддержка"
         },
         stats: {
@@ -463,7 +463,7 @@ const translations = {
             subtitle: "Durbin — a platform that combines CRM, LMS, ERP and BI modules. Education quality at the center, all processes under control.",
             cta_demo: "Get Demo",
             cta_telegram: "Write on Telegram",
-            modules: "Core Modules",
+            satisfaction: "Client Satisfaction",
             support: "Tech Support"
         },
         stats: {
