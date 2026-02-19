@@ -360,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const formMessage = document.getElementById('formMessage');
 
         const BOT_TOKEN = '8084101687:AAG2pCUT_xDGxU5O82Jy5mEJb1fMjDcbKMA';
-        const CHAT_ID = '6045648028';
+        const CHAT_ID = '-1003851418956';
 
         contactForm.addEventListener('submit', e => {
             e.preventDefault();
