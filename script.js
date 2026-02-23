@@ -401,6 +401,15 @@ document.addEventListener('DOMContentLoaded', () => {
                         formMessage.textContent = "Ma'lumotlar muvaffaqiyatli yuborildi! Tez orada aloqaga chiqamiz.";
                         formMessage.classList.add('success');
                         contactForm.reset();
+                        
+                        // Google Analytics event for form submission
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'form_submission', {
+                                'event_category': 'Contact',
+                                'event_label': 'Demo Request',
+                                'value': 1
+                            });
+                        }
                     } else {
                         throw new Error(data.description || 'Telegram xatosi');
                     }
