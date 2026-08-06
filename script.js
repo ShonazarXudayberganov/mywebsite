@@ -945,8 +945,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnLoading = $('.btn-loading', submitBtn);
         const formMessage = $('#formMessage');
 
-        const BOT_TOKEN = '8084101687:AAG2pCUT_xDGxU5O82Jy5mEJb1fMjDcbKMA';
-        const CHAT_ID = '-1003851418956';
+        // The bot token and chat id live in the serverless function's
+        // environment, never here — anything in this file is public.
+        const LEAD_ENDPOINT = '/api/lead';
 
         function setError(id, messageKey) {
             const field = $(`#${id}`);
@@ -978,7 +979,10 @@ document.addEventListener('DOMContentLoaded', () => {
             setError('school', school ? null : (ok = false, 'contact.err_school'));
             setError('phone', digits.length === 9 ? null : (ok = false, 'contact.err_phone'));
 
-            return ok ? { name, school, phone: '+998' + digits } : null;
+            // company is the honeypot; a real visitor never fills it in
+            return ok
+                ? { name, school, phone: '+998' + digits, company: $('#company').value }
+                : null;
         }
 
         function showMessage(type, text) {
@@ -1002,21 +1006,16 @@ document.addEventListener('DOMContentLoaded', () => {
             formMessage.className = 'form-message';
             formMessage.textContent = '';
 
-            const message =
-                `<b>Yangi Lid 🎓</b>\n\n` +
-                `👤 <b>Ism:</b> ${payload.name}\n` +
-                `🏫 <b>Maktab:</b> ${payload.school}\n` +
-                `📞 <b>Telefon:</b> ${payload.phone}\n\n` +
-                `<i>Durbin saytidan yuborildi</i>`;
-
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            // The server composes the Telegram message; the browser only
+            // hands over the three fields the visitor typed.
+            fetch(LEAD_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' })
+                body: JSON.stringify(payload)
             })
-                .then(res => res.json())
+                .then(res => res.json().catch(() => ({ ok: false, error: 'bad_response' })))
                 .then(data => {
-                    if (!data.ok) throw new Error(data.description || 'Telegram error');
+                    if (!data.ok) throw new Error(data.error || 'lead_failed');
 
                     showMessage('success', t('contact.ok'));
                     form.reset();

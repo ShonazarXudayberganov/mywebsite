@@ -4958,3 +4958,14 @@ body,
         transform: none;
     }
 }
+
+/* Honeypot. Positioned away rather than display:none — some bots skip
+   fields they can see are hidden, and this one is meant to be filled. */
+.hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    pointer-events: none;
+}

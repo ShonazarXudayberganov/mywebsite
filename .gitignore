@@ -1,0 +1,13 @@
+# Local agent tooling — not part of the site
+.agents/
+.claude/
+skills-lock.json
+
+# Secrets never belong in the repo; set them in the Vercel dashboard
+.env
+.env.*
+.vercel
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
