@@ -6,18 +6,20 @@ const translations = {
 
     /* ═══════════════════════ O'ZBEKCHA ═══════════════════════ */
     uz: {
-        a11y: { skip: "Asosiy kontentga o'tish", prev: "Oldingi modul", next: "Keyingi modul" },
+        a11y: { skip: "Asosiy kontentga o'tish", prev: "Oldingi modul", next: "Keyingi modul", lang: "Tilni tanlash", theme: "Yorug' va tungi mavzuni almashtirish" },
         cta: { demo: "Demo olish" },
         nav: {
+            home: "Bosh sahifa",
             modules: "Modullar",
-            automation: "Avtomatlashtirish",
-            roles: "Rollar",
-            why: "Nega Durbin"
+            automation: "Durbin qanday ishlaydi",
+            features: "Imkoniyatlar",
+            faq: "FAQ",
+            contact: "Bog'lanish"
         },
         hero: {
-            eyebrow: "Maktab boshqaruv tizimi",
-            title: "Maktabingiz <em>bitta tizimda</em>",
-            subtitle: "Qabuldan bitiruvgacha, dars jadvalidan oylik hisoblashgacha. Durbin barcha jarayonni birlashtiradi va bajarilishini o'zi nazorat qiladi.",
+            eyebrow: "Xususiy maktab va o'quv markazlari uchun",
+            title: "Maktabingiz <em>o'zini boshqaradi</em>",
+            subtitle: "Durbin ma'lumot saqlab qo'ymaydi. Har bir vazifani egasiga yuboradi, muddatini kuzatadi va bajarilganini o'zi tekshiradi.",
             panel: "Boshqaruv paneli",
             live: "Jonli",
             k1: "O'quvchilar", k2: "Davomat", k3: "Qarzdorlar", k4: "Ochiq vazifa",
@@ -29,18 +31,17 @@ const translations = {
             f3: "To'lov qabul qilindi",
             f4: "Adaptatsiya vazifasi yopildi"
         },
-        promise: {
-            p1_t: "Hammasi ko'rinadi",
-            p1_d: "Moliya, davomat, qabul va xodimlar bitta panelda. Ma'lumot bir marta kiritiladi va hamma joyda ishlaydi.",
-            p2_t: "Hech narsa unutilmaydi",
-            p2_d: "Tizim vazifani o'zi taqsimlaydi, muddatini kuzatadi va bajarilmasa yuqoriga chiqaradi.",
-            p3_t: "Hisobot tayyor turadi",
-            p3_d: "So'rash va yig'ish shart emas. Har yo'nalish bo'yicha tahlil har doim ekranda."
-        },
         modules: {
             eyebrow: "12 ta modul",
             title: "Maktabning har bir jarayoni uchun alohida modul",
             lead: "Chapdan modulni tanlang, o'ngda uning ichida nima ishlashini ko'ring.",
+            groups: {
+                learning: "O'quv jarayoni",
+                growth: "O'sish",
+                ops: "Boshqaruv",
+                ai: "Aqlli yordam",
+                channels: "Kanallar"
+            },
             items: {
                 lms: {
                     name: "Ta'lim",
@@ -242,69 +243,52 @@ const translations = {
             }
         },
         auto: {
-            eyebrow: "Durbin'ning asosiy kuchi",
-            title: "Standart qog'ozda emas, tizimda yashaydi",
-            lead: "Har maktabda qoidalar bor. Amalda esa kimdir esidan chiqaradi, kimdir ulgurmaydi, va buni hech kim bilmaydi. Durbin hodisani o'zi sezadi va tegishli xodimga vazifa yuboradi.",
-            s1_t: "Hodisa vazifaga aylanadi",
-            s1_d: "Maktabda biror narsa sodir bo'ladi, tizim tegishli vazifalarni yaratib egalariga yuboradi.",
-            s2_t: "Muddat kuzatiladi",
-            s2_d: "Muddat o'tsa avval ijrochi ogohlantiriladi, keyin rahbar, undan keyin bo'lim boshlig'i.",
-            s3_t: "Bajarilgani tasdiqlanadi",
-            s3_d: "Kerak bo'lsa dalil talab qilinadi: foto yoki hujjat.",
-            s4_t: "Sifatga ball qo'yiladi",
-            s4_d: "Muddatida bajarsa to'liq, kechiksa yarmi, qayta ishlashga qaytarilsa yana kam.",
+            eyebrow: "Durbin qanday ishlaydi",
+            title: "Bitta hodisa — <em>butun tizim javob beradi</em>",
+            lead: "Durbin o'n ikkita alohida dastur emas. Ma'lumot bir marta kiritiladi, keyin kim nima qilishi va natija qayerga tushishi tizimning o'zida hal bo'ladi.",
+            s1_t: "Ma'lumot bir marta kiritiladi",
+            s1_d: "O'quvchi, xodim, to'lov yoki baho bir joyda yoziladi va o'n ikkala modulda o'sha yozuv ishlaydi.",
+            s2_t: "Hodisa jarayonni ishga tushiradi",
+            s2_d: "Qabul, kechikkan to'lov, qo'yilgan baho — tegishli modullar o'z ishini o'zi boshlaydi.",
+            s3_t: "Bajarilish nazorat qilinadi",
+            s3_d: "Har vazifaning egasi va muddati bor. Kechiksa, tizim uni yuqoriga chiqaradi.",
+            s4_t: "Natija hisobotga aylanadi",
+            s4_d: "Har amal raqamga aylanadi. Hisobotni yig'ish shart emas, u doim tayyor turadi.",
             ex_label: "Misol",
             ex_trigger: "O'quvchi sinfga qabul qilindi.",
-            ex_note: "Shu zahoti adaptatsiya jarayonining barcha vazifasi yaratiladi va har biri o'z egasiga boradi:",
-            ex_r1: "Sinf rahbari", ex_t1: "ota-ona bilan tanishuv",
-            ex_r2: "Psixolog", ex_t2: "adaptatsiya kuzatuvi",
-            ex_r3: "Tyutor", ex_t3: "birinchi hafta nazorati",
-            ex_out: "Rahbar “bajarildimi?” deb so'rab yurmaydi. Javob ekranda turadi.",
-            foot: "Tizimda tayyor standartlar to'plami bor: qabul, adaptatsiya, shikoyat bilan ishlash, sotuv va moliya. Ularni noldan yozish shart emas, maktabingizga moslashtirasiz."
+            ex_note: "Bitta amal — beshta modul bir vaqtning o'zida ishga tushadi:",
+            ex_t1: "lid yopiladi, shartnoma tuziladi",
+            ex_t2: "to'lov jadvali ochiladi",
+            ex_t3: "sinf va dars jadvali biriktiriladi",
+            ex_t4: "adaptatsiya vazifalari egalariga ketadi",
+            ex_t5: "ota-onaga xabar boradi",
+            ex_out: "Hech kim hech kimga qo'ng'iroq qilmadi. Hammasi bitta hodisadan keldi.",
+            foot: "Modullarni bosqichma-bosqich yoqish mumkin, lekin ular bitta bazada ishlaydi. Shuning uchun nazorat ham, hisobot ham butun maktab bo'yicha yagona bo'ladi."
         },
         roles: {
+            eyebrow: "12 ta lavozim",
             title: "Har kim faqat o'zinikini ko'radi",
-            lead: "Kirish huquqlari nozik sozlanadi. O'qituvchi o'z sinfini, moliyachi to'lovlarni, direktor hammasini ko'radi.",
-            ceo: "Asoschi", director: "Direktor", teacher: "O'qituvchi", parent: "Ota-ona", student: "O'quvchi",
-            ceo_t: "Asoschi nimani ko'radi",
-            ceo_1: "Barcha filial bo'yicha umumiy manzara",
-            ceo_2: "Foyda, zarar va byudjet rejasi",
-            ceo_3: "Qabul konversiyasi va marketing samarasi",
-            ceo_4: "Standartlar bajarilishi bo'yicha ball",
-            director_t: "Direktor nimani ko'radi",
-            director_1: "Xodimlar davomati va intizomi",
-            director_2: "Muddati o'tgan vazifalar ro'yxati",
-            director_3: "Sinflar kesimida o'zlashtirish",
-            director_4: "Qarzdorlik va kunlik kassa",
-            teacher_t: "O'qituvchi nimani ko'radi",
-            teacher_1: "Faqat o'z sinfi va fanlari",
-            teacher_2: "Davomat va baholarni telefondan qo'yish",
-            teacher_3: "Dars rejasi va uy vazifalari",
-            teacher_4: "O'ziga biriktirilgan vazifalar",
-            parent_t: "Ota-ona nimani ko'radi",
-            parent_1: "Farzandining bugungi davomati",
-            parent_2: "Kechagi bahosi va progress hisoboti",
-            parent_3: "Qolgan to'lov va to'lov tarixi",
-            parent_4: "Maktab bilan to'g'ridan-to'g'ri yozishma",
-            student_t: "O'quvchi nimani ko'radi",
-            student_1: "O'z baholari va reytingi",
-            student_2: "Dars jadvali va uy vazifalari",
-            student_3: "Yig'ilgan tangalar balansi",
-            student_4: "Market: tangani mahsulotga almashtirish",
-            mini: {
-                ceo_k: [["Filiallar", "3"], ["Foyda", "+18,4%"], ["Standart bali", "92"]],
-                ceo_b: [["Chilonzor", 88], ["Yunusobod", 74], ["Sergeli", 61]],
-                dir_h: "Muddati o'tgan vazifalar",
-                dir_r: [["Shikoyatga javob", "Sinf rahbari", "late"], ["Adaptatsiya hisoboti", "Psixolog", "late"], ["Oylik tabel", "HR bo'limi", "ok"]],
-                tea_h: "9-A · Davomat",
-                tea_r: [["Aliyev Bekzod", 1], ["Karimova Nilufar", 1], ["Rasulov Javohir", 0]],
-                tea_s: "Saqlash",
-                par_t: [["ph-check-circle", "Davomat", "Bugun darsda"], ["ph-star", "Baho", "Matematika: 5"], ["ph-wallet", "To'lov", "Qoldiq 450 000 so'm"]],
-                stu_c: "Tanga balansi",
-                stu_g: [["Matematika", 5], ["Fizika", 4], ["Ona tili", 5]]
+            lead: "Kirish huquqlari lavozim bo'yicha sozlanadi. Har xodim faqat o'z ishiga kerak modulni va faqat o'ziga tegishli ma'lumotni ko'radi.",
+            sees: "{role} nimani ko'radi",
+            access: "Modullarga kirish",
+            levels: { f: "To'liq", o: "Faqat o'ziniki", n: "Yopiq" },
+            items: {
+                founder: { name: "Asoschi", points: ["Barcha filial bo'yicha yagona manzara", "Foyda, zarar va byudjet rejasi", "Standartlar bajarilishi bo'yicha ball"] },
+                director: { name: "Direktor", points: ["Xodimlar davomati va intizomi", "Muddati o'tgan vazifalar ro'yxati", "Sinflar kesimida o'zlashtirish va kunlik kassa"] },
+                academic: { name: "Ta'lim direktori", points: ["Dars jadvali va o'qituvchilar yuklamasi", "Fanlar kesimida o'zlashtirish dinamikasi", "Dars rejalari va imtihon natijalari"] },
+                classlead: { name: "Sinf rahbari", points: ["O'z sinfi bo'yicha davomat va baholar", "Ota-onalar bilan yozishma", "O'ziga biriktirilgan vazifalar"] },
+                teacher: { name: "O'qituvchi", points: ["Faqat o'z sinfi va fanlari", "Davomat va bahoni telefondan qo'yish", "Dars rejasi va uy vazifalari"] },
+                psych: { name: "Psixolog", points: ["O'ziga biriktirilgan o'quvchilar", "Adaptatsiya va kuzatuv yozuvlari", "Ota-ona bilan suhbat rejasi"] },
+                admissions: { name: "Qabul menejeri", points: ["Lidlar va qabul voronkasi", "Qo'ng'iroqlar va suhbat yozuvlari", "Shartnoma va birinchi to'lov"] },
+                marketer: { name: "Marketolog", points: ["Kanal bo'yicha lid soni va narxi", "Kampaniya samarasi va byudjet", "Kontent rejasi va nashr kalendari"] },
+                finance: { name: "Moliyachi", points: ["Kunlik kassa va tranzaksiyalar", "Qarzdorlar ro'yxati va eslatmalar", "Oylik hisoblash va byudjet"] },
+                hr: { name: "HR menejeri", points: ["Xodimlar davomati va tabel", "Ta'til, kechikish va bonuslar", "Vakansiya va nomzodlar"] },
+                parent: { name: "Ota-ona", points: ["Farzandining davomati va baholari", "Qolgan to'lov va to'lov tarixi", "Maktab bilan to'g'ridan-to'g'ri yozishma"] },
+                student: { name: "O'quvchi", points: ["O'z baholari va reytingi", "Dars jadvali va uy vazifalari", "Tanga balansi va Market"] }
             }
         },
         extras: {
+            eyebrow: "Imkoniyatlar",
             title: "Yana nimalar ichida",
             lead: "Maktab kunini to'liq qoplaydigan kichik, lekin kerakli jarayonlar.",
             f1_t: "Salomatlik va tarbiya",
@@ -323,6 +307,7 @@ const translations = {
             f7_d: "Xodimlar va ota-onalar fikri yig'iladi, natija bo'limlar kesimida ko'rinadi."
         },
         why: {
+            eyebrow: "Taqqoslash",
             title: "Nega Durbin",
             lead: "Boshqa tizimlar ma'lumot saqlaydi. Durbin bundan tashqari ishni taqsimlaydi, muddatini kuzatadi va bajarilishini nazorat qiladi.",
             cmp_a_t: "Odatdagi yechim",
@@ -348,7 +333,23 @@ const translations = {
             w6_t: "Telefondan ham ishlaydi",
             w6_d: "O'qituvchi darsda davomatni telefondan belgilaydi, xodim ish joyida telefondan belgilanadi."
         },
+        faq: {
+            eyebrow: "FAQ",
+            title: "Ko'p beriladigan savollar",
+            lead: "Javobini topa olmadingizmi? Telegram yoki telefon orqali yozing, o'zimiz tushuntiramiz.",
+            items: [
+                { q: "Durbinni joriy qilish qancha vaqt oladi?", a: "Ko'p hollarda 2–4 hafta. Bunga ma'lumotni ko'chirish, tizimni maktabingiz jarayonlariga sozlash va xodimlarni o'qitish kiradi. Modullarni birdaniga emas, bosqichma-bosqich yoqish mumkin." },
+                { q: "Hozirgi ma'lumotlarimizni ko'chira olamizmi?", a: "Ha. O'quvchilar, xodimlar, sinflar va to'lov tarixi Excel fayllardan yoki amaldagi tizimdan ko'chiriladi — qo'lda qayta kiritish shart emas." },
+                { q: "Xodimlar tizimni o'rganib keta oladimi?", a: "Interfeys lavozim bo'yicha sozlangan: o'qituvchi faqat o'z sinfi va vazifalarini ko'radi, moliyachi to'lovlarni. Har kim faqat o'z ishini ko'rgani uchun o'rganish qisqa bo'ladi." },
+                { q: "Bir nechta filial bilan ishlaydimi?", a: "Ha. Har filial o'z ma'lumoti bilan alohida yuritiladi, umumiy standart markazdan tarqatiladi, asoschi esa hamma filialni bitta ekranda ko'radi." },
+                { q: "Faqat kerakli modullarni olsak bo'ladimi?", a: "Durbin yaxlit tizim sifatida beriladi — o'n ikkala modul birga keladi. Ular bitta bazada ishlagani uchun ajratib sotilmaydi: qabul moliyaga, moliya ta'limga bog'liq. Boshida faqat kerakli modullarni yoqib ishlatishingiz, qolganini keyin ochishingiz mumkin." },
+                { q: "Ma'lumot xavfsizligi qanday ta'minlanadi?", a: "Kirish huquqlari lavozim bo'yicha cheklanadi, har amal iz qoldiradi va kim nima o'zgartirgani ko'rinib turadi. Zaxira nusxa muntazam olinadi." },
+                { q: "Telefon va Telegram orqali ishlaydimi?", a: "Ha. Mobil ilova o'qituvchi, ota-ona va o'quvchi uchun alohida ishlaydi, Telegram bot esa baho, davomat va to'lov haqida xabar yuboradi." },
+                { q: "Narxi qanday hisoblanadi?", a: "Narx o'quvchilar va filiallar soniga bog'liq. Aniq hisobni demo suhbatida maktabingiz o'lchamiga qarab beramiz." }
+            ]
+        },
         contact: {
+            eyebrow: "Bog'lanish",
             title: "Maktabingizni Durbin bilan ko'ring",
             desc: "Demoda tizimni o'z ma'lumotlaringiz misolida ko'rsatamiz. Raqamingizni qoldiring, o'zimiz bog'lanamiz.",
             name_label: "Ismingiz",
@@ -373,18 +374,20 @@ const translations = {
 
     /* ═══════════════════════ РУССКИЙ ═══════════════════════ */
     ru: {
-        a11y: { skip: "Перейти к содержимому", prev: "Предыдущий модуль", next: "Следующий модуль" },
+        a11y: { skip: "Перейти к содержимому", prev: "Предыдущий модуль", next: "Следующий модуль", lang: "Выбрать язык", theme: "Переключить светлую и тёмную тему" },
         cta: { demo: "Получить демо" },
         nav: {
+            home: "Главная",
             modules: "Модули",
-            automation: "Автоматизация",
-            roles: "Роли",
-            why: "Почему Durbin"
+            automation: "Как работает Durbin",
+            features: "Возможности",
+            faq: "FAQ",
+            contact: "Контакты"
         },
         hero: {
-            eyebrow: "Система управления школой",
-            title: "Ваша школа <em>в одной системе</em>",
-            subtitle: "От приёма до выпуска, от расписания до расчёта зарплаты. Durbin объединяет все процессы и сам контролирует их выполнение.",
+            eyebrow: "Для частных школ и учебных центров",
+            title: "Ваша школа <em>работает сама</em>",
+            subtitle: "Durbin не просто хранит данные. Он отправляет каждую задачу владельцу, следит за сроком и сам проверяет результат.",
             panel: "Панель управления",
             live: "Онлайн",
             k1: "Учеников", k2: "Посещаемость", k3: "Должников", k4: "Открытых задач",
@@ -396,18 +399,17 @@ const translations = {
             f3: "Принят платёж",
             f4: "Закрыта задача адаптации"
         },
-        promise: {
-            p1_t: "Всё на виду",
-            p1_d: "Финансы, посещаемость, приём и сотрудники на одной панели. Данные вводятся один раз и работают везде.",
-            p2_t: "Ничего не забывается",
-            p2_d: "Система сама распределяет задачи, следит за сроком и поднимает наверх невыполненное.",
-            p3_t: "Отчёт всегда готов",
-            p3_d: "Не нужно запрашивать и собирать. Аналитика по каждому направлению всегда на экране."
-        },
         modules: {
             eyebrow: "12 модулей",
             title: "Отдельный модуль под каждый процесс школы",
             lead: "Выберите модуль слева и посмотрите справа, как он работает.",
+            groups: {
+                learning: "Учебный процесс",
+                growth: "Рост",
+                ops: "Управление",
+                ai: "Умная помощь",
+                channels: "Каналы"
+            },
             items: {
                 lms: {
                     name: "Обучение",
@@ -609,69 +611,52 @@ const translations = {
             }
         },
         auto: {
-            eyebrow: "Главная сила Durbin",
-            title: "Стандарт живёт в системе, а не на бумаге",
-            lead: "В каждой школе есть правила. На практике кто-то забывает, кто-то не успевает, и об этом никто не знает. Durbin сам замечает событие и отправляет задачу нужному сотруднику.",
-            s1_t: "Событие становится задачей",
-            s1_d: "В школе что-то происходит, система создаёт нужные задачи и отправляет их владельцам.",
-            s2_t: "Срок под контролем",
-            s2_d: "Если срок прошёл, сначала предупреждается исполнитель, затем руководитель, затем начальник отдела.",
-            s3_t: "Выполнение подтверждается",
-            s3_d: "При необходимости запрашивается доказательство: фото или документ.",
-            s4_t: "За качество ставится балл",
-            s4_d: "Выполнено в срок, значит полный балл. С опозданием, значит половина. Возвращено на доработку, значит ещё меньше.",
+            eyebrow: "Как работает Durbin",
+            title: "Одно событие — <em>отвечает вся система</em>",
+            lead: "Durbin — это не двенадцать отдельных программ. Данные вводятся один раз, а дальше система сама решает, кто что делает и куда попадает результат.",
+            s1_t: "Данные вводятся один раз",
+            s1_d: "Ученик, сотрудник, платёж или оценка записываются в одном месте, и эта же запись работает во всех двенадцати модулях.",
+            s2_t: "Событие запускает процесс",
+            s2_d: "Приём, просроченный платёж, выставленная оценка — нужные модули сами начинают свою работу.",
+            s3_t: "Исполнение под контролем",
+            s3_d: "У каждой задачи есть владелец и срок. При опоздании система поднимает её наверх.",
+            s4_t: "Результат становится отчётом",
+            s4_d: "Каждое действие превращается в цифру. Отчёт не нужно собирать — он всегда готов.",
             ex_label: "Пример",
             ex_trigger: "Ученик принят в класс.",
-            ex_note: "В тот же момент создаются все задачи процесса адаптации и каждая уходит своему владельцу:",
-            ex_r1: "Классный руководитель", ex_t1: "знакомство с родителями",
-            ex_r2: "Психолог", ex_t2: "наблюдение за адаптацией",
-            ex_r3: "Тьютор", ex_t3: "контроль первой недели",
-            ex_out: "Руководителю не нужно спрашивать “сделали?”. Ответ уже на экране.",
-            foot: "В системе есть готовый набор стандартов: приём, адаптация, работа с жалобами, продажи и финансы. Писать с нуля не нужно, вы адаптируете их под свою школу."
+            ex_note: "Одно действие — и пять модулей включаются одновременно:",
+            ex_t1: "лид закрывается, оформляется договор",
+            ex_t2: "открывается график платежей",
+            ex_t3: "закрепляются класс и расписание",
+            ex_t4: "задачи адаптации уходят владельцам",
+            ex_t5: "родителю уходит уведомление",
+            ex_out: "Никто никому не звонил. Всё пришло из одного события.",
+            foot: "Модули можно подключать постепенно, но работают они на одной базе. Поэтому и контроль, и отчётность остаются едиными по всей школе."
         },
         roles: {
+            eyebrow: "12 должностей",
             title: "Каждый видит только своё",
-            lead: "Права доступа настраиваются точно. Учитель видит свой класс, финансист платежи, директор всё.",
-            ceo: "Учредитель", director: "Директор", teacher: "Учитель", parent: "Родитель", student: "Ученик",
-            ceo_t: "Что видит учредитель",
-            ceo_1: "Общая картина по всем филиалам",
-            ceo_2: "Прибыль, убыток и план бюджета",
-            ceo_3: "Конверсия приёма и эффективность маркетинга",
-            ceo_4: "Баллы за выполнение стандартов",
-            director_t: "Что видит директор",
-            director_1: "Посещаемость и дисциплина сотрудников",
-            director_2: "Список просроченных задач",
-            director_3: "Успеваемость в разрезе классов",
-            director_4: "Задолженность и дневная касса",
-            teacher_t: "Что видит учитель",
-            teacher_1: "Только свой класс и предметы",
-            teacher_2: "Посещаемость и оценки с телефона",
-            teacher_3: "План урока и домашние задания",
-            teacher_4: "Закреплённые за ним задачи",
-            parent_t: "Что видит родитель",
-            parent_1: "Сегодняшняя посещаемость ребёнка",
-            parent_2: "Вчерашняя оценка и отчёт о прогрессе",
-            parent_3: "Остаток платежа и история оплат",
-            parent_4: "Прямая переписка со школой",
-            student_t: "Что видит ученик",
-            student_1: "Свои оценки и рейтинг",
-            student_2: "Расписание и домашние задания",
-            student_3: "Баланс накопленных монет",
-            student_4: "Маркет: обмен монет на товар",
-            mini: {
-                ceo_k: [["Филиалы", "3"], ["Прибыль", "+18,4%"], ["Балл стандартов", "92"]],
-                ceo_b: [["Чиланзар", 88], ["Юнусабад", 74], ["Сергели", 61]],
-                dir_h: "Просроченные задачи",
-                dir_r: [["Ответ на жалобу", "Классный рук.", "late"], ["Отчёт по адаптации", "Психолог", "late"], ["Табель за месяц", "Отдел HR", "ok"]],
-                tea_h: "9-А · Посещаемость",
-                tea_r: [["Алиев Бекзод", 1], ["Каримова Нилуфар", 1], ["Расулов Джавохир", 0]],
-                tea_s: "Сохранить",
-                par_t: [["ph-check-circle", "Посещаемость", "Сегодня на уроках"], ["ph-star", "Оценка", "Математика: 5"], ["ph-wallet", "Оплата", "Остаток 450 000 сум"]],
-                stu_c: "Баланс монет",
-                stu_g: [["Математика", 5], ["Физика", 4], ["Родной язык", 5]]
+            lead: "Права доступа настраиваются по должности. Каждый сотрудник видит только нужный ему модуль и только свои данные.",
+            sees: "Что видит {role}",
+            access: "Доступ к модулям",
+            levels: { f: "Полный", o: "Только своё", n: "Закрыт" },
+            items: {
+                founder: { name: "Основатель", points: ["Единая картина по всем филиалам", "Прибыль, убытки и план бюджета", "Балл за исполнение стандартов"] },
+                director: { name: "Директор", points: ["Посещаемость и дисциплина сотрудников", "Список просроченных задач", "Успеваемость по классам и касса за день"] },
+                academic: { name: "Директор по учебной части", points: ["Расписание и нагрузка учителей", "Динамика успеваемости по предметам", "Планы уроков и результаты экзаменов"] },
+                classlead: { name: "Классный руководитель", points: ["Посещаемость и оценки своего класса", "Переписка с родителями", "Закреплённые за ним задачи"] },
+                teacher: { name: "Учитель", points: ["Только свой класс и свои предметы", "Посещаемость и оценки с телефона", "План урока и домашние задания"] },
+                psych: { name: "Психолог", points: ["Закреплённые за ним ученики", "Записи об адаптации и наблюдении", "План бесед с родителями"] },
+                admissions: { name: "Менеджер приёма", points: ["Лиды и воронка приёма", "Звонки и записи разговоров", "Договор и первый платёж"] },
+                marketer: { name: "Маркетолог", points: ["Количество и цена лида по каналам", "Эффективность кампаний и бюджет", "Контент-план и календарь публикаций"] },
+                finance: { name: "Финансист", points: ["Касса за день и транзакции", "Список должников и напоминания", "Расчёт зарплаты и бюджет"] },
+                hr: { name: "HR-менеджер", points: ["Посещаемость сотрудников и табель", "Отпуска, опоздания и бонусы", "Вакансии и кандидаты"] },
+                parent: { name: "Родитель", points: ["Посещаемость и оценки ребёнка", "Остаток и история платежей", "Прямая переписка со школой"] },
+                student: { name: "Ученик", points: ["Свои оценки и рейтинг", "Расписание и домашние задания", "Баланс монет и Маркет"] }
             }
         },
         extras: {
+            eyebrow: "Возможности",
             title: "Что ещё внутри",
             lead: "Небольшие, но нужные процессы, которые закрывают школьный день целиком.",
             f1_t: "Здоровье и воспитание",
@@ -690,6 +675,7 @@ const translations = {
             f7_d: "Собирается мнение сотрудников и родителей, результат виден в разрезе отделов."
         },
         why: {
+            eyebrow: "Сравнение",
             title: "Почему Durbin",
             lead: "Другие системы хранят данные. Durbin вдобавок распределяет работу, следит за сроком и контролирует выполнение.",
             cmp_a_t: "Обычное решение",
@@ -715,7 +701,23 @@ const translations = {
             w6_t: "Работает и с телефона",
             w6_d: "Учитель отмечает посещаемость на уроке с телефона, сотрудник отмечается на рабочем месте."
         },
+        faq: {
+            eyebrow: "FAQ",
+            title: "Частые вопросы",
+            lead: "Не нашли ответ? Напишите в Telegram или позвоните — объясним лично.",
+            items: [
+                { q: "Сколько времени занимает внедрение Durbin?", a: "Обычно 2–4 недели. Сюда входит перенос данных, настройка системы под процессы вашей школы и обучение сотрудников. Модули можно включать постепенно, а не все сразу." },
+                { q: "Можно ли перенести наши текущие данные?", a: "Да. Ученики, сотрудники, классы и история платежей переносятся из Excel или из действующей системы — вводить заново вручную не нужно." },
+                { q: "Смогут ли сотрудники разобраться?", a: "Интерфейс настроен по должности: учитель видит только свой класс и свои задачи, финансист — платежи. Каждый видит только свою работу, поэтому обучение короткое." },
+                { q: "Работает ли система с несколькими филиалами?", a: "Да. Каждый филиал ведётся отдельно со своими данными, общий стандарт раздаётся из центра, а основатель видит все филиалы на одном экране." },
+                { q: "Можно ли взять только нужные модули?", a: "Durbin поставляется как единая система — все двенадцать модулей идут вместе. Они работают на одной базе, поэтому по отдельности не продаются: приём связан с финансами, финансы с обучением. В начале можно включить только нужные модули, а остальные открыть позже." },
+                { q: "Как обеспечивается безопасность данных?", a: "Права доступа ограничены по должности, каждое действие оставляет след, видно кто и что изменил. Резервные копии создаются регулярно." },
+                { q: "Работает ли это через телефон и Telegram?", a: "Да. Мобильное приложение работает отдельно для учителя, родителя и ученика, а Telegram-бот присылает оценки, посещаемость и напоминания об оплате." },
+                { q: "Как рассчитывается стоимость?", a: "Стоимость зависит от количества учеников и филиалов. Точный расчёт дадим на демо, исходя из размера вашей школы." }
+            ]
+        },
         contact: {
+            eyebrow: "Контакты",
             title: "Посмотрите свою школу в Durbin",
             desc: "На демо покажем систему на примере ваших данных. Оставьте номер, мы свяжемся сами.",
             name_label: "Ваше имя",
@@ -740,18 +742,20 @@ const translations = {
 
     /* ═══════════════════════ ENGLISH ═══════════════════════ */
     en: {
-        a11y: { skip: "Skip to content", prev: "Previous module", next: "Next module" },
+        a11y: { skip: "Skip to content", prev: "Previous module", next: "Next module", lang: "Choose language", theme: "Switch between light and dark theme" },
         cta: { demo: "Book a demo" },
         nav: {
+            home: "Home",
             modules: "Modules",
-            automation: "Automation",
-            roles: "Roles",
-            why: "Why Durbin"
+            automation: "How Durbin works",
+            features: "Capabilities",
+            faq: "FAQ",
+            contact: "Contact"
         },
         hero: {
-            eyebrow: "School management system",
-            title: "Your school <em>in one system</em>",
-            subtitle: "From admission to graduation, from timetable to payroll. Durbin connects every process and tracks that the work actually gets done.",
+            eyebrow: "For private schools and learning centres",
+            title: "Your school <em>runs itself</em>",
+            subtitle: "Durbin doesn't just store records. It sends every task to its owner, tracks the deadline and checks the result itself.",
             panel: "Control panel",
             live: "Live",
             k1: "Students", k2: "Attendance", k3: "Debtors", k4: "Open tasks",
@@ -763,18 +767,17 @@ const translations = {
             f3: "Payment received",
             f4: "Onboarding task closed"
         },
-        promise: {
-            p1_t: "Everything is visible",
-            p1_d: "Finance, attendance, admissions and staff on one panel. Data is entered once and works everywhere.",
-            p2_t: "Nothing gets forgotten",
-            p2_d: "The system assigns the task, watches the deadline and escalates when it is missed.",
-            p3_t: "The report is already there",
-            p3_d: "No requesting, no collecting. Analytics for every area stays on screen."
-        },
         modules: {
             eyebrow: "12 modules",
             title: "A dedicated module for every school process",
             lead: "Pick a module on the left and watch how it works on the right.",
+            groups: {
+                learning: "Learning",
+                growth: "Growth",
+                ops: "Operations",
+                ai: "Smart help",
+                channels: "Channels"
+            },
             items: {
                 lms: {
                     name: "Teaching",
@@ -976,69 +979,52 @@ const translations = {
             }
         },
         auto: {
-            eyebrow: "What Durbin does best",
-            title: "The standard lives in the system, not on paper",
-            lead: "Every school has rules. In practice someone forgets, someone runs out of time, and nobody finds out. Durbin notices the event itself and sends the task to the right person.",
-            s1_t: "An event becomes a task",
-            s1_d: "Something happens at school, and the system creates the related tasks and routes them to their owners.",
-            s2_t: "The deadline is tracked",
-            s2_d: "If the deadline passes, the assignee is warned first, then the manager, then the head of department.",
-            s3_t: "Completion is confirmed",
-            s3_d: "Proof can be required: a photo or a document.",
-            s4_t: "Quality gets a score",
-            s4_d: "On time is full credit, late is half, sent back for rework is less again.",
+            eyebrow: "How Durbin works",
+            title: "One event — <em>the whole system answers</em>",
+            lead: "Durbin is not twelve separate programs. Data is entered once, and from there the system decides who does what and where the result lands.",
+            s1_t: "Data is entered once",
+            s1_d: "A student, an employee, a payment or a grade is recorded in one place, and that same record works across all twelve modules.",
+            s2_t: "An event starts the process",
+            s2_d: "An enrolment, a late payment, a grade posted — the modules that matter start their own work.",
+            s3_t: "Execution stays under control",
+            s3_d: "Every task has an owner and a deadline. When it slips, the system pushes it upward.",
+            s4_t: "The result becomes the report",
+            s4_d: "Every action turns into a number. Nothing has to be collected — the report is already there.",
             ex_label: "Example",
             ex_trigger: "A student is enrolled in a class.",
-            ex_note: "Right away every task in the onboarding process is created and routed to its owner:",
-            ex_r1: "Class teacher", ex_t1: "meet the parents",
-            ex_r2: "Psychologist", ex_t2: "monitor adaptation",
-            ex_r3: "Tutor", ex_t3: "first week check-in",
-            ex_out: "The manager never has to ask “is it done?”. The answer is on the screen.",
-            foot: "A library of ready standards ships with the system: admissions, onboarding, complaint handling, sales and finance. You adapt them to your school instead of writing them from scratch."
+            ex_note: "One action, and five modules start at the same moment:",
+            ex_t1: "the lead closes, the contract is drawn up",
+            ex_t2: "the payment schedule opens",
+            ex_t3: "class and timetable are assigned",
+            ex_t4: "onboarding tasks go to their owners",
+            ex_t5: "the parent gets a notification",
+            ex_out: "Nobody called anybody. All of it came from one event.",
+            foot: "Modules can be switched on in stages, but they run on one database. That is why control and reporting stay single across the whole school."
         },
         roles: {
+            eyebrow: "12 positions",
             title: "Everyone sees only their own work",
-            lead: "Access rights are configured precisely. A teacher sees their class, an accountant sees payments, the director sees all of it.",
-            ceo: "Founder", director: "Director", teacher: "Teacher", parent: "Parent", student: "Student",
-            ceo_t: "What the founder sees",
-            ceo_1: "One picture across every branch",
-            ceo_2: "Profit, loss and budget plan",
-            ceo_3: "Admission conversion and marketing performance",
-            ceo_4: "Scores for standards compliance",
-            director_t: "What the director sees",
-            director_1: "Staff attendance and discipline",
-            director_2: "The list of overdue tasks",
-            director_3: "Performance by class",
-            director_4: "Outstanding debt and daily cash",
-            teacher_t: "What the teacher sees",
-            teacher_1: "Only their own classes and subjects",
-            teacher_2: "Attendance and grades from a phone",
-            teacher_3: "Lesson plans and homework",
-            teacher_4: "Tasks assigned to them",
-            parent_t: "What the parent sees",
-            parent_1: "Today's attendance for their child",
-            parent_2: "Yesterday's grade and progress report",
-            parent_3: "Outstanding balance and payment history",
-            parent_4: "Direct messaging with the school",
-            student_t: "What the student sees",
-            student_1: "Their grades and ranking",
-            student_2: "Timetable and homework",
-            student_3: "Coin balance",
-            student_4: "Market: trade coins for real items",
-            mini: {
-                ceo_k: [["Branches", "3"], ["Profit", "+18.4%"], ["Standards score", "92"]],
-                ceo_b: [["Chilonzor", 88], ["Yunusobod", 74], ["Sergeli", 61]],
-                dir_h: "Overdue tasks",
-                dir_r: [["Reply to complaint", "Class teacher", "late"], ["Onboarding report", "Psychologist", "late"], ["Monthly timesheet", "HR team", "ok"]],
-                tea_h: "9-A · Attendance",
-                tea_r: [["Aliyev Bekzod", 1], ["Karimova Nilufar", 1], ["Rasulov Javohir", 0]],
-                tea_s: "Save",
-                par_t: [["ph-check-circle", "Attendance", "In class today"], ["ph-star", "Grade", "Mathematics: 5"], ["ph-wallet", "Payment", "450 000 UZS left"]],
-                stu_c: "Coin balance",
-                stu_g: [["Mathematics", 5], ["Physics", 4], ["Native language", 5]]
+            lead: "Access is configured per position. Each person sees only the modules their job needs, and only their own data.",
+            sees: "What {role} sees",
+            access: "Module access",
+            levels: { f: "Full", o: "Own only", n: "No access" },
+            items: {
+                founder: { name: "Founder", points: ["One picture across every branch", "Profit, loss and the budget plan", "A score for how standards are kept"] },
+                director: { name: "Director", points: ["Staff attendance and discipline", "The list of overdue tasks", "Performance by class and the day's cash"] },
+                academic: { name: "Academic director", points: ["Timetable and teacher workload", "Performance trends by subject", "Lesson plans and exam results"] },
+                classlead: { name: "Class teacher", points: ["Attendance and grades for their class", "Correspondence with parents", "The tasks assigned to them"] },
+                teacher: { name: "Teacher", points: ["Only their own class and subjects", "Attendance and grades from a phone", "Lesson plan and homework"] },
+                psych: { name: "Psychologist", points: ["The students assigned to them", "Adaptation and observation notes", "The schedule of parent conversations"] },
+                admissions: { name: "Admissions manager", points: ["Leads and the admission funnel", "Calls and call recordings", "Contract and first payment"] },
+                marketer: { name: "Marketer", points: ["Lead volume and cost per channel", "Campaign performance and budget", "Content plan and publishing calendar"] },
+                finance: { name: "Finance", points: ["The day's cash and transactions", "Debtor list and reminders", "Payroll and budget"] },
+                hr: { name: "HR manager", points: ["Staff attendance and timesheets", "Leave, lateness and bonuses", "Vacancies and candidates"] },
+                parent: { name: "Parent", points: ["Their child's attendance and grades", "Balance and payment history", "Direct correspondence with the school"] },
+                student: { name: "Student", points: ["Their own grades and ranking", "Timetable and homework", "Coin balance and the Market"] }
             }
         },
         extras: {
+            eyebrow: "Capabilities",
             title: "What else is inside",
             lead: "The small but necessary processes that cover a full school day.",
             f1_t: "Health and pastoral care",
@@ -1057,6 +1043,7 @@ const translations = {
             f7_d: "Staff and parent feedback is collected and results break down by department."
         },
         why: {
+            eyebrow: "The comparison",
             title: "Why Durbin",
             lead: "Other systems store data. Durbin also assigns the work, watches the deadline and verifies that it was done.",
             cmp_a_t: "The usual setup",
@@ -1082,7 +1069,23 @@ const translations = {
             w6_t: "Works on a phone",
             w6_d: "Teachers mark attendance from their phone during the lesson, and staff check in from the workplace."
         },
+        faq: {
+            eyebrow: "FAQ",
+            title: "Frequently asked questions",
+            lead: "Not answered here? Write on Telegram or call us and we will walk you through it.",
+            items: [
+                { q: "How long does it take to roll Durbin out?", a: "Usually two to four weeks. That covers migrating your data, configuring the system around your school's processes and training the staff. Modules can be switched on in stages rather than all at once." },
+                { q: "Can we bring our existing data across?", a: "Yes. Students, staff, classes and payment history are migrated from Excel files or from your current system — nothing has to be retyped." },
+                { q: "Will the staff be able to learn it?", a: "The interface is configured per position: a teacher sees only their class and their tasks, the finance role sees payments. Because each person sees only their own work, training is short." },
+                { q: "Does it work with several branches?", a: "Yes. Each branch runs on its own data, the shared standard is pushed from the centre, and the founder sees every branch on one screen." },
+                { q: "Can we take only the modules we need?", a: "Durbin comes as one system — all twelve modules ship together. They run on a single database, so they are not sold separately: admissions depends on finance, finance on teaching. At the start you can switch on only the modules you need and open the rest later." },
+                { q: "How is the data kept secure?", a: "Access is limited by position, every action leaves a trace, and who changed what stays visible. Backups are taken regularly." },
+                { q: "Does it work over the phone and Telegram?", a: "Yes. The mobile app works separately for teacher, parent and student, and the Telegram bot sends grades, attendance and payment reminders." },
+                { q: "How is the price calculated?", a: "Price depends on the number of students and branches. We give an exact figure at the demo, based on the size of your school." }
+            ]
+        },
         contact: {
+            eyebrow: "Contact",
             title: "See your school inside Durbin",
             desc: "In the demo we walk through the system using your own data. Leave your number and we will get in touch.",
             name_label: "Your name",

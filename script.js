@@ -14,6 +14,19 @@ document.addEventListener('DOMContentLoaded', () => {
         return node;
     }
 
+    // The heading wipe clips an inner line rather than the heading, so the
+    // heading keeps a real intersection box. Translation rewrites innerHTML,
+    // which drops the wrapper, so this runs again after every swap.
+    function wrapHeadings() {
+        $$('.rv-h').forEach(heading => {
+            const first = heading.firstElementChild;
+            if (first && first.classList.contains('rv-line') && heading.childNodes.length === 1) return;
+            const line = el('span', 'rv-line');
+            while (heading.firstChild) line.appendChild(heading.firstChild);
+            heading.appendChild(line);
+        });
+    }
+
     /* ───────────────────────── i18n ───────────────────────── */
 
     const LANGS = ['uz', 'ru', 'en'];
@@ -33,7 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try { localStorage.setItem('durbin-lang', lang); } catch (e) { /* ignore */ }
 
-        $$('.lang-btn').forEach(btn => btn.classList.toggle('is-active', btn.dataset.lang === lang));
+        $$('.lang-btn').forEach(btn => {
+            const on = btn.dataset.lang === lang;
+            btn.classList.toggle('is-active', on);
+            btn.setAttribute('aria-checked', String(on));
+        });
+
+        const current = $('#langCurrent');
+        if (current) current.textContent = lang.toUpperCase();
 
         $$('[data-i18n]').forEach(node => {
             const value = t(node.getAttribute('data-i18n'));
@@ -47,15 +67,111 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof value === 'string') node.setAttribute('placeholder', value);
         });
 
+        // Controls that carry no visible label still need a translated one
+        $$('[data-i18n-aria]').forEach(node => {
+            const value = t(node.getAttribute('data-i18n-aria'));
+            if (typeof value === 'string') node.setAttribute('aria-label', value);
+        });
+
+        // The innerHTML swaps above just removed every heading's wipe wrapper
+        wrapHeadings();
+
         buildVizContent();
-        buildMiniPanels();
+        buildRoles();
+        buildFaq();
         renderModule(activeModule, false);
 
         const pane = $('.pane.is-active');
         if (pane) runNums(pane);
     }
 
-    $$('.lang-btn').forEach(btn => btn.addEventListener('click', () => applyLanguage(btn.dataset.lang)));
+    /* ──────────────── Language dropdown ───────────────────── */
+
+    const langToggle = $('#langToggle');
+    const langMenu = $('#langMenu');
+
+    function closeLang(focusToggle) {
+        if (!langMenu || !langMenu.classList.contains('is-open')) return;
+        langMenu.classList.remove('is-open');
+        langToggle.setAttribute('aria-expanded', 'false');
+        if (focusToggle) langToggle.focus();
+    }
+
+    if (langToggle && langMenu) {
+        langToggle.addEventListener('click', event => {
+            event.stopPropagation();
+            const open = !langMenu.classList.contains('is-open');
+            langMenu.classList.toggle('is-open', open);
+            langToggle.setAttribute('aria-expanded', String(open));
+            if (open) {
+                const active = $('.lang-btn.is-active', langMenu) || $('.lang-btn', langMenu);
+                if (active) active.focus();
+            }
+        });
+
+        // Roving focus so the menu is usable without a pointer
+        langMenu.addEventListener('keydown', event => {
+            const items = $$('.lang-btn', langMenu);
+            const at = items.indexOf(document.activeElement);
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                const step = event.key === 'ArrowDown' ? 1 : -1;
+                items[(at + step + items.length) % items.length].focus();
+            }
+        });
+
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') closeLang(true);
+        });
+
+        document.addEventListener('click', event => {
+            if (!langMenu.contains(event.target)) closeLang(false);
+        });
+    }
+
+    $$('.lang-btn').forEach(btn => btn.addEventListener('click', () => {
+        applyLanguage(btn.dataset.lang);
+        closeLang(true);
+    }));
+
+    /* ───────────────────── Theme ──────────────────────────── */
+
+    // The <head> already resolved the theme before first paint; this only
+    // takes over the switching and keeps the browser chrome in step.
+    const themeToggle = $('#themeToggle');
+    const themeMeta = $('#themeColorMeta');
+    const osDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const THEME_COLOR = { light: '#0A6A5C', dark: '#071614' };
+
+    function applyTheme(theme, persist) {
+        document.documentElement.setAttribute('data-theme', theme);
+        if (themeMeta) themeMeta.setAttribute('content', THEME_COLOR[theme]);
+        if (themeToggle) themeToggle.setAttribute('aria-pressed', String(theme === 'dark'));
+        if (persist) {
+            try { localStorage.setItem('durbin-theme', theme); } catch (e) { /* ignore */ }
+        }
+    }
+
+    let storedTheme = null;
+    try { storedTheme = localStorage.getItem('durbin-theme'); } catch (e) { /* ignore */ }
+
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light', false);
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            storedTheme = next;
+            applyTheme(next, true);
+        });
+    }
+
+    // Follow the OS only while the visitor has not made a choice of their own
+    const onOsChange = event => {
+        if (storedTheme) return;
+        applyTheme(event.matches ? 'dark' : 'light', false);
+    };
+    if (osDark.addEventListener) osDark.addEventListener('change', onOsChange);
+    else if (osDark.addListener) osDark.addListener(onOsChange);
 
     /* ─────────────────── Number count-up ──────────────────── */
 
@@ -299,105 +415,212 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ────────────── Role mini-panels (per tab) ────────────── */
+    /* ─────────────────────── Roles ────────────────────────── */
 
-    function buildMiniPanels() {
-        const m = t('roles.mini');
-        if (!m) return;
+    // Icons and access levels are the same in every language, so they live
+    // here; only the wording comes from the translations.
+    const ROLE_ICONS = {
+        founder: 'crown-simple',
+        director: 'briefcase',
+        academic: 'books',
+        classlead: 'user-focus',
+        teacher: 'chalkboard-teacher',
+        psych: 'heartbeat',
+        admissions: 'target',
+        marketer: 'megaphone-simple',
+        finance: 'wallet',
+        hr: 'identification-badge',
+        parent: 'users-three',
+        student: 'student'
+    };
 
-        // Founder: three metrics plus a branch comparison
-        fill($('.js-mini-ceo'), box => {
-            const kpis = el('div', 'mini-kpis');
-            m.ceo_k.forEach(([label, value], i) => {
-                const tile = el('div', 'mini-kpi');
-                tile.style.setProperty('--i', i);
-                tile.appendChild(el('span', null, label));
-                tile.appendChild(el('b', null, value));
-                kpis.appendChild(tile);
+    // f = full, o = own records only, n = no access. Anything not listed is n,
+    // which is the safe default for a permission table.
+    const ROLE_ACCESS = {
+        founder: { lms: 'f', crm: 'f', marketing: 'f', erp: 'f', hr: 'f', sop: 'f', ai: 'f', agents: 'f', mobile: 'f', telegram: 'f', students: 'f', parents: 'f' },
+        director: { lms: 'f', crm: 'f', marketing: 'o', erp: 'o', hr: 'f', sop: 'f', ai: 'f', agents: 'f', mobile: 'f', telegram: 'f', students: 'f', parents: 'f' },
+        academic: { lms: 'f', erp: 'n', hr: 'o', sop: 'f', ai: 'f', agents: 'o', mobile: 'f', telegram: 'o', students: 'f', parents: 'o' },
+        classlead: { lms: 'o', sop: 'o', ai: 'o', mobile: 'f', telegram: 'o', students: 'o', parents: 'o' },
+        teacher: { lms: 'o', sop: 'o', ai: 'o', mobile: 'f', students: 'o', parents: 'o' },
+        psych: { sop: 'o', ai: 'o', mobile: 'f', students: 'o', parents: 'o' },
+        admissions: { crm: 'f', marketing: 'o', erp: 'o', sop: 'o', ai: 'f', agents: 'o', mobile: 'f', telegram: 'f', students: 'o', parents: 'o' },
+        marketer: { crm: 'o', marketing: 'f', sop: 'o', ai: 'f', agents: 'o', telegram: 'o' },
+        finance: { crm: 'o', erp: 'f', hr: 'o', sop: 'o', ai: 'o', agents: 'o', mobile: 'f', telegram: 'o', students: 'o', parents: 'o' },
+        hr: { erp: 'o', hr: 'f', sop: 'f', ai: 'o', agents: 'o', mobile: 'f', telegram: 'o' },
+        parent: { lms: 'o', erp: 'o', mobile: 'f', telegram: 'f', students: 'o', parents: 'o' },
+        student: { lms: 'o', mobile: 'f', students: 'o' }
+    };
+
+    const ROLE_ORDER = Object.keys(ROLE_ICONS);
+    const LEVEL_ICON = { f: 'check-circle', o: 'eye', n: 'lock-simple' };
+
+    const roleTabs = $('#roleTabs');
+    const rolePanels = $('#rolePanels');
+    let activeRole = ROLE_ORDER[0];
+
+    function buildRoles() {
+        if (!roleTabs || !rolePanels) return;
+        const data = t('roles');
+        if (!data || !data.items) return;
+
+        roleTabs.innerHTML = '';
+        rolePanels.innerHTML = '';
+
+        ROLE_ORDER.forEach(key => {
+            const role = data.items[key];
+            if (!role) return;
+            const on = key === activeRole;
+
+            const tab = el('button', 'tab-btn' + (on ? ' is-active' : ''));
+            tab.type = 'button';
+            tab.dataset.role = key;
+            tab.setAttribute('role', 'tab');
+            tab.setAttribute('aria-selected', String(on));
+            tab.setAttribute('aria-controls', 'role-' + key);
+            tab.innerHTML = '<i class="ph ph-' + ROLE_ICONS[key] + '" aria-hidden="true"></i>';
+            tab.appendChild(el('span', null, role.name));
+            roleTabs.appendChild(tab);
+
+            const pane = el('div', 'pane' + (on ? ' is-active' : ''));
+            pane.id = 'role-' + key;
+            pane.setAttribute('role', 'tabpanel');
+
+            const copy = el('div', 'pane-copy');
+            copy.appendChild(el('h3', null, (data.sees || '{role}').replace('{role}', role.name)));
+            const list = el('ul');
+            role.points.forEach(point => list.appendChild(el('li', null, point)));
+            copy.appendChild(list);
+            pane.appendChild(copy);
+            pane.appendChild(buildAccessMap(key, data));
+
+            rolePanels.appendChild(pane);
+        });
+    }
+
+    // The section's claim is about permissions, so the panel shows the actual
+    // permission table: every module, and what this position may do with it.
+    function buildAccessMap(key, data) {
+        const grant = ROLE_ACCESS[key] || {};
+        const map = el('figure', 'amap');
+        map.appendChild(el('figcaption', 'amap-head', data.access));
+
+        const grid = el('div', 'amap-grid');
+        MODULE_ORDER.forEach((mod, i) => {
+            const level = grant[mod] || 'n';
+            const cell = el('div', 'amap-cell is-' + level);
+            cell.dataset.mod = mod;
+            cell.style.setProperty('--i', i);
+            cell.innerHTML = '<i class="ph ph-' + LEVEL_ICON[level] + '" aria-hidden="true"></i>';
+            const name = t('modules.items.' + mod + '.name');
+            cell.appendChild(el('span', null, typeof name === 'string' ? name : mod));
+            cell.title = data.levels[level];
+            grid.appendChild(cell);
+        });
+        map.appendChild(grid);
+
+        // Legend, so the three states are readable without hovering
+        const legend = el('div', 'amap-legend');
+        ['f', 'o', 'n'].forEach(level => {
+            const item = el('span', 'is-' + level);
+            item.innerHTML = '<i class="ph ph-' + LEVEL_ICON[level] + '" aria-hidden="true"></i>';
+            item.appendChild(el('b', null, data.levels[level]));
+            legend.appendChild(item);
+        });
+        map.appendChild(legend);
+
+        return map;
+    }
+
+    if (roleTabs) {
+        roleTabs.addEventListener('click', event => {
+            const tab = event.target.closest('.tab-btn');
+            if (!tab || tab.dataset.role === activeRole) return;
+            activeRole = tab.dataset.role;
+
+            $$('.tab-btn', roleTabs).forEach(other => {
+                const on = other === tab;
+                other.classList.toggle('is-active', on);
+                other.setAttribute('aria-selected', String(on));
             });
-            box.appendChild(kpis);
-
-            const bars = el('div', 'mini-bars');
-            m.ceo_b.forEach(([label, pct], i) => {
-                const row = el('div', 'fn-row');
-                row.style.setProperty('--i', i);
-                row.appendChild(el('span', 'fn-l', label));
-                const bar = el('span', 'fn-b');
-                bar.style.setProperty('--w', pct + '%');
-                bar.appendChild(el('i'));
-                row.appendChild(bar);
-                row.appendChild(el('b', 'fn-v', pct + '%'));
-                bars.appendChild(row);
+            $$('.pane', rolePanels).forEach(pane => {
+                pane.classList.toggle('is-active', pane.id === 'role-' + activeRole);
             });
-            box.appendChild(bars);
+            replay($('#role-' + activeRole + ' .amap'));
+        });
+    }
+
+    /* ───────────────────────── FAQ ────────────────────────── */
+
+    const faqList = $('#faqList');
+
+    // <details> so the questions still open without JS; the handler below
+    // only adds the height animation and the one-open-at-a-time behaviour.
+    function buildFaq() {
+        if (!faqList) return;
+        const data = t('faq');
+        if (!data || !data.items) return;
+
+        faqList.innerHTML = '';
+        data.items.forEach((item, i) => {
+            const box = el('details', 'faq-item');
+            box.style.setProperty('--i', i);
+            if (i === 0) box.open = true;
+
+            const head = el('summary', 'faq-q');
+            head.appendChild(el('span', null, item.q));
+            head.innerHTML += '<i class="ph ph-plus" aria-hidden="true"></i>';
+            box.appendChild(head);
+
+            const body = el('div', 'faq-a');
+            body.appendChild(el('p', null, item.a));
+            box.appendChild(body);
+
+            faqList.appendChild(box);
+
+            // The collapsed height is 0 by default; the one that starts open
+            // has to be told it may take its own height, or it reads as open
+            // with nothing in it.
+            if (box.open) body.style.height = 'auto';
+        });
+    }
+
+    function setFaqHeight(box, open) {
+        const body = $('.faq-a', box);
+        if (!body) return;
+        body.style.height = open ? body.scrollHeight + 'px' : '0px';
+    }
+
+    if (faqList) {
+        faqList.addEventListener('click', event => {
+            const head = event.target.closest('.faq-q');
+            if (!head) return;
+            event.preventDefault();
+
+            const box = head.parentElement;
+            const opening = !box.open;
+
+            // Only one answer at a time: a column of open answers is a wall
+            $$('.faq-item', faqList).forEach(other => {
+                if (other === box) return;
+                if (other.open) { setFaqHeight(other, false); other.open = false; }
+            });
+
+            if (opening) {
+                box.open = true;
+                setFaqHeight(box, true);
+            } else {
+                setFaqHeight(box, false);
+                const done = () => { box.open = false; };
+                if (reduce) done();
+                else setTimeout(done, 260);
+            }
         });
 
-        // Director: overdue task list
-        fill($('.js-mini-director'), box => {
-            box.appendChild(el('p', 'rows-h', m.dir_h));
-            m.dir_r.forEach(([task, who, state], i) => {
-                const row = el('div', 'trow ' + state);
-                row.style.setProperty('--i', i);
-                const wrap = el('div');
-                wrap.appendChild(el('b', null, task));
-                wrap.appendChild(el('em', null, who));
-                row.appendChild(wrap);
-                const chip = el('span', 'tchip');
-                chip.innerHTML = `<i class="ph ${state === 'late' ? 'ph-clock-countdown' : 'ph-check'}" aria-hidden="true"></i>`;
-                row.appendChild(chip);
-                box.appendChild(row);
-            });
-        });
-
-        // Teacher: attendance being marked
-        fill($('.js-mini-teacher'), box => {
-            box.appendChild(el('p', 'rows-h', m.tea_h));
-            m.tea_r.forEach(([name, present], i) => {
-                const row = el('div', 'ph-row');
-                row.style.setProperty('--i', i);
-                row.appendChild(el('span', null, name));
-                const mark = el('b', present ? '' : 'absent');
-                mark.innerHTML = `<i class="ph ${present ? 'ph-check' : 'ph-x'}" aria-hidden="true"></i>`;
-                row.appendChild(mark);
-                box.appendChild(row);
-            });
-            box.appendChild(el('span', 'ph-save', m.tea_s));
-        });
-
-        // Parent: what actually lands on the phone
-        fill($('.js-mini-parent'), box => {
-            m.par_t.forEach(([icon, title, body], i) => {
-                const toast = el('div', 'toast');
-                toast.style.setProperty('--i', i);
-                toast.innerHTML = `<i class="ph ${icon}" aria-hidden="true"></i>`;
-                const wrap = el('div');
-                wrap.appendChild(el('b', null, title));
-                wrap.appendChild(el('em', null, body));
-                toast.appendChild(wrap);
-                box.appendChild(toast);
-            });
-        });
-
-        // Student: coins and grades
-        fill($('.js-mini-student'), box => {
-            const coins = el('div', 'stu-coins');
-            coins.innerHTML = '<i class="ph-fill ph-coins" aria-hidden="true"></i>';
-            const wrap = el('div');
-            wrap.appendChild(el('span', null, m.stu_c));
-            const value = el('b', 'num');
-            value.dataset.to = '340';
-            value.textContent = '0';
-            wrap.appendChild(value);
-            coins.appendChild(wrap);
-            box.appendChild(coins);
-
-            m.stu_g.forEach(([subject, mark], i) => {
-                const row = el('div', 'ph-row');
-                row.style.setProperty('--i', i);
-                row.appendChild(el('span', null, subject));
-                row.appendChild(el('b', null, String(mark)));
-                box.appendChild(row);
-            });
+        // The first answer starts open, so it needs a height to animate from
+        faqList.addEventListener('transitionend', event => {
+            if (event.propertyName !== 'height') return;
+            const box = event.target.parentElement;
+            if (box && box.open) event.target.style.height = 'auto';
         });
     }
 
@@ -408,7 +631,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const exName = $('#exName');
     const exLead = $('#exLead');
     const exPoints = $('#exPoints');
+    const exBadge = $('#exBadge');
+    const exIndex = $('#exIndex');
     let activeModule = 'lms';
+
+    // One icon per capability, in the same order as the points in content.js.
+    // They live here rather than in the translations because a capability is
+    // the same capability in every language — only its wording changes.
+    const POINT_ICONS = {
+        lms: ['calendar-dots', 'notebook', 'shield-check', 'clipboard-text', 'exam', 'chart-line-up'],
+        students: ['identification-card', 'first-aid-kit', 'path', 'graduation-cap', 'arrows-clockwise', 'coin'],
+        parents: ['bell-ringing', 'chats-circle', 'list-checks', 'chart-line-up', 'lock-key', 'seal-check'],
+        crm: ['funnel', 'phone-call', 'headset', 'note-pencil', 'users-three', 'chart-donut'],
+        marketing: ['instagram-logo', 'calendar-plus', 'tag', 'currency-circle-dollar', 'scales', 'file-arrow-down'],
+        erp: ['receipt', 'credit-card', 'bell-ringing', 'chart-line', 'target', 'lock-key'],
+        hr: ['scan-smiley', 'map-pin', 'clock-countdown', 'money', 'airplane-takeoff', 'tree-structure'],
+        sop: ['lightning', 'timer', 'arrow-fat-lines-up', 'camera', 'star', 'books'],
+        ai: ['envelope-simple', 'pen-nib', 'image', 'chats-circle', 'lightbulb', 'translate'],
+        agents: ['pulse', 'warning', 'magnifying-glass', 'lightbulb-filament', 'trend-up', 'newspaper'],
+        mobile: ['note-pencil', 'scan-smiley', 'eye', 'backpack', 'bell', 'translate'],
+        telegram: ['paper-plane-tilt', 'coins', 'megaphone-simple', 'chat-teardrop-dots', 'checks', 'link-simple']
+    };
 
     function replay(node) {
         if (!node || reduce) return;
@@ -435,10 +678,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         exName.textContent = data.name;
         exLead.textContent = data.lead;
+
+        // The badge repeats the rail's own icon, so the panel and the row you
+        // clicked are visibly the same thing.
+        const source = exItems.find(item => item.dataset.mod === key);
+        const sourceIcon = source && source.querySelector('i');
+        if (exBadge && sourceIcon) exBadge.firstElementChild.className = sourceIcon.className;
+        if (exIndex) {
+            const at = exItems.indexOf(source) + 1;
+            exIndex.textContent = String(at).padStart(2, '0') + ' / ' + exItems.length;
+        }
+
+        // Each capability becomes a tile with its own icon — the list stops
+        // being six sentences and starts being six things the module does.
+        const icons = POINT_ICONS[key] || [];
         exPoints.innerHTML = '';
         data.points.forEach((point, i) => {
-            const li = el('li', null, point);
+            const li = el('li');
             li.style.setProperty('--i', i);
+            const mark = el('i');
+            mark.className = 'ph ph-' + (icons[i] || 'check');
+            mark.setAttribute('aria-hidden', 'true');
+            li.appendChild(mark);
+            li.appendChild(el('span', null, point));
             exPoints.appendChild(li);
         });
 
@@ -620,7 +882,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { rootMargin: '0px 0px -12% 0px', threshold: 0.12 });
 
-    $$('.reveal').forEach(node => {
+    // Headings wipe up instead of fading. The class goes on here, before the
+    // observer runs, because a heading that is NOT also a .reveal has no other
+    // way to earn .is-in — and .rv-h without .is-in stays clipped shut.
+    $$('h1, section h2').forEach(heading => heading.classList.add('rv-h'));
+    wrapHeadings();
+
+    $$('.reveal, .rv-h').forEach(node => {
         if (node.dataset.delay) node.style.setProperty('--d', node.dataset.delay);
         revealObserver.observe(node);
     });
@@ -631,7 +899,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         if (revealFired) return;
         revealObserver.disconnect();
-        $$('.reveal').forEach(node => node.classList.add('is-in'));
+        $$('.reveal, .rv-h').forEach(node => node.classList.add('is-in'));
     }, 2500);
 
     /* ──────────── Live panels enter on first view ─────────── */
@@ -640,7 +908,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (!entry.isIntersecting) return;
             entry.target.classList.add('is-live');
-            $$('.pane.is-active .mini', entry.target).forEach(mini => mini.classList.add('is-live'));
+            $$(".pane.is-active .amap", entry.target).forEach(mini => mini.classList.add('is-live'));
             runNums(entry.target);
             observer.unobserve(entry.target);
         });
@@ -649,26 +917,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ['#heroPanel', '#exViz', '.roles-panels', '.extras-bento'].forEach(sel => {
         const node = $(sel);
         if (node) liveObserver.observe(node);
-    });
-
-    /* ─────────────────────── Role tabs ─────────────────────── */
-
-    const tabs = $$('.tab-btn');
-    const panes = $$('.pane');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(other => {
-                const on = other === tab;
-                other.classList.toggle('is-active', on);
-                other.setAttribute('aria-selected', String(on));
-            });
-            panes.forEach(pane => pane.classList.toggle('is-active', pane.id === tab.dataset.tab));
-
-            const pane = $('#' + tab.dataset.tab);
-            replay($('.mini', pane));
-            runNums(pane);
-        });
     });
 
     /* ─────────────────── Phone input format ────────────────── */
@@ -795,9 +1043,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ───────────────────────── Boot ────────────────────────── */
 
-    // Headings wipe up instead of fading; the class is applied here so it
-    // survives the innerHTML swaps that translation does.
-    $$('h1, section h2').forEach(heading => heading.classList.add('rv-h'));
-
+    // .rv-h is applied up with the reveal observer, not here, so every
+    // heading is actually being watched. Translation swaps innerHTML, never
+    // the element itself, so the class survives a language change.
     applyLanguage(currentLang);
 });
