@@ -884,6 +884,15 @@
 
                 <div class="form-bezel reveal" data-delay="1">
                     <form class="form" id="contactForm" novalidate>
+                        <!-- Honeypot. Off-screen rather than display:none, because
+                             some bots skip fields they can tell are hidden. Real
+                             visitors never reach it: it is out of the tab order
+                             and hidden from assistive tech. -->
+                        <div class="hp" aria-hidden="true">
+                            <label for="company">Company</label>
+                            <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+                        </div>
+
                         <div class="field">
                             <label for="name" data-i18n="contact.name_label">Ismingiz</label>
                             <input type="text" id="name" name="name" autocomplete="name" required
